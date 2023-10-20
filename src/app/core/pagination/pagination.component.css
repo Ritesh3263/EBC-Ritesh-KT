@@ -1,0 +1,52 @@
+.pagination-foo {
+  border-top: 1.94444px solid var(--color-border);
+  padding-top: 20px;
+}
+
+.pagination-foo .pagin-sel label {
+  color: var(--black);
+}
+
+.pagination-foo .pagin-sel ::ng-deep .select {
+  border: none;
+  background: var(--color-light-gray);
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+}
+
+@media (max-width: 576px) {
+  .pagination-foo .pagin-sel {
+    display: contents !important;
+  }
+}
+
+.pagination-foo nav ul {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.pagination-foo nav ul li .active {
+  width: 31px;
+  height: 31px;
+  background-color: var(--color-primary);
+  color: var(--white);
+  border-radius: 50px;
+  margin-right: 3px;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.disabled {
+  cursor: not-allowed;
+}
+
+@media (max-width: 575.98px) {
+  .pagination-foo {
+    padding: 15px 5px;
+  }
+}
+/*# sourceMappingURL=pagination.component.css.map */

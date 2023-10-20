@@ -1,0 +1,83 @@
+<div class="side_container">
+    <div class="container-fluid">
+      <div class="main-page">
+        <div class="row m-0 mt-3">
+          <div class="col-md-3 admin-brdcmb mt-0">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a routerLink="/dashboard">Reports</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Expiry</ol>
+            </nav>
+          </div>
+  
+        </div>
+        <div class="row m-0">
+          <div class="row m-0 buttons">
+            <div class="w-30 d-flex">
+              <div class="form-group w-45 input-fildcl">
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-date-range-input [rangePicker]="picker">
+                      <input matStartDate placeholder="Start date" [(ngModel)]="startDate">
+                      <input matEndDate placeholder="End date" [(ngModel)]="endDate"
+                      (dateChange)="dateChange()">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="adbtn col">
+                <button (click)="reset()" color="primary" class="mr-5 reset-btn mat-raised-button">
+                  <a>Reset</a>
+                </button>
+                <button color="primary" class="mr-5 mat-raised-button" (click)="onDownload()">
+                  <a>
+                    <mat-icon>file_download</mat-icon>
+                    Export
+                  </a>
+                </button>
+              </div>
+              
+            </div>
+          </div>
+          <div class="col-lg-12 mt-3">
+            <div class="main-div">
+              <div class="admin-table">
+                <table class="table table-width">
+                  <thead>
+                    <tr>
+                      <th scope="col" *ngFor="let col of filterColumns">{{col}}</th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf="objectArray.length > 0">
+                    <tr *ngFor="let item of objectArray">
+                      <td> {{item.name}} </td>
+                      <td> {{item?.email}} </td>
+                      <td> {{item?.totalAllocatedLicenses}} </td>
+                      <td> {{item?.totalActivatedLicenses}} </td>
+                      <td> {{item?.totalAvailableLicenses}} </td>
+                      <td> {{item?.userStatus}} </td>
+                      <td> {{item?.createdOn | date: 'dd/MM/yyyy' }} </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="objectArray.length == 0">
+                    <tr><td colspan="3"> No Records Found </td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mt-3">
+                <pagination [paginationList]="pagination" [selectedPageLimit]="currentPageLimit"
+                  [currentPage]="currentPage" (onPageChange)="getPage($event)">
+                </pagination>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

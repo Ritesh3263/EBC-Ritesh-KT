@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,gBAAgB,CAAC;EACb,OAAO,EAAE,GAAG;CACf;;AAGD,AAAA,IAAI,CACJ;EACI,MAAM,EAAE,WAAW;CACtB;;AACD,AAAA,OAAO,CAAA;EACH,UAAU,EAAE,SAAS;EACrB,OAAO,EAAE,YAAY;EACrB,WAAW,EAAE,YAAY;CAC5B",
+    "sources": [
+        "profile-drop.component.scss"
+    ],
+    "names": [],
+    "file": "profile-drop.component.css"
+}

@@ -1,0 +1,119 @@
+<div class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="row m-0 mt-3">
+        <div class="col-12 col-md-6 mt-0">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a [routerLink]="(currentUser?.role == 'End User') ?  '/my-cards' : '/dashboard'">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+               My View
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+
+      <div class="row m-0">
+        <div class="col-12">
+          <div class="bg">
+            <div class="buttons text-right top-bar">
+              <div class="d-flex top-bar_break">
+                <div class="w-31" style="position: relative;" *ngIf="permissionObject?.includes(permissionCode?.myConnectFilters)">
+                  <mat-form-field class="drp-dwn" appearance="outline" >
+                    <mat-select placeholder="Select Company" multiple [(ngModel)]="selectedCompany" (selectionChange)="getObjects()">
+                      <mat-option *ngFor="let item of companies" [value]="item">
+                        {{ item }}
+                      </mat-option>
+                      <!-- <mat-option class="text-primary" [value]=""> Clear Filter</mat-option> -->
+                    </mat-select>
+                  </mat-form-field>
+                  <img class="cmpny_drp-dwn" src="assets/images/company.svg">
+                </div>
+                <div class="w-31" style="margin-top: 3px;"*ngIf="permissionObject?.includes(permissionCode?.myConnectsSearch)">
+                  <search-box class="searchBox" (text)="searchObject($event)" [placeholder]="'Search'"></search-box>
+                </div>
+              </div>
+            </div>
+
+            <div class="row d-flex cards-wrap ">
+
+              <div class="tbl_cont">
+                <div class="tbl_wrap">
+                 <mat-card class="card_new card_hdr">
+                      <div class="d-flex card_block_wrap" style="justify-content: space-around; width: 100%;">
+                        <div class="card_block card_block_name" >
+                          <H1 class="hedder_txt">Name <img class="sort_img" src="assets/images/filter.svg"></H1>
+                        </div>
+                        <div class="card_block card_block_cmp" >
+                          <H1 class="hedder_txt">Company <img class="sort_img" src="assets/images/filter.svg"></H1>
+                        </div>
+                        <div class="card_block card_block_desg">
+                          <H1 class="hedder_txt">Designation <img class="sort_img" src="assets/images/filter.svg"></H1>
+                        </div>
+                        <div class="card_block card_block_phn" >
+                          <H1 class="hedder_txt">Phone <img class="sort_img" src="assets/images/filter.svg"></H1>
+                        </div>
+                        <div class="card_block card_block_email" >
+                          <H1 class="hedder_txt">E-mail <img class="sort_img" src="assets/images/filter.svg"></H1>
+                        </div>
+                        <div class="card_block card_block_email" >
+                          <H1 class="hedder_txt">Scanned Date And Time <img class="sort_img" src="assets/images/filter.svg"></H1>
+                        </div>
+                        <div class="card_block card_block_mail" >
+                          <H1 class="hedder_txt">Action</H1>
+                        </div>
+                      </div>
+                  </mat-card>
+
+                  <mat-card class="card_new" *ngFor="let cDetails of objectArray; let i = index">
+                    <div class="d-flex card_block_wrap" style="justify-content: space-around;">
+                      <div class="card_block card_block_name">
+                        <mat-card-subtitle>{{ cDetails?.name }}</mat-card-subtitle>
+                      </div>
+                      <div class="card_block card_block_cmp">
+                        <mat-card-subtitle>{{ cDetails?.companyName }}</mat-card-subtitle>
+                      </div>
+                      <div class="card_block card_block_desg">
+                        <mat-card-subtitle>{{ cDetails?.designation }}</mat-card-subtitle>
+                      </div>
+                      <div class="card_block card_block_phn">
+                        <mat-card-subtitle>{{ cDetails?.mobileNumber }}</mat-card-subtitle>
+                      </div>
+                      <div class="card_block card_block_email">
+                        <mat-card-subtitle>{{ cDetails?.email }}</mat-card-subtitle>
+                      </div>
+                      <div class="card_block card_block_email">
+                        <mat-card-subtitle>{{ cDetails?.updatedDate | date: 'MMM d, y, h:mm a' }}</mat-card-subtitle>
+                      </div>
+                      <div class="card_block card_block_mail">
+                        <mat-card-subtitle><a href="javascript:void(0);" title="Save Contact" (click)="saveContact(cDetails, i)"><mat-icon>download</mat-icon></a></mat-card-subtitle>
+                        <button type="button" style="display: none;" id="carddown2_{{i}}" vcdDownloadVCard
+                        [generateVCardFunction]="generateVCardOnTheFly"></button>
+                      </div>
+                    </div>
+                  </mat-card>
+                </div>
+              </div>
+
+              <div class="container-fluid" *ngIf="!selectedCompany">
+                <h1 class="text-muted">Select the company</h1>
+              </div>
+              <div class="container-fluid" *ngIf="selectedCompany && objectArray.length==0">
+                <h1 class="text-muted">No Record Found</h1>
+              </div>
+              <div *ngIf="showPagination" class="mt-3">
+                <pagination [paginationList]="pagination" [currentPage]="currentPage" (onPageChange)="getPage($event)">
+                </pagination>
+                
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

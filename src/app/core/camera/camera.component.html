@@ -1,0 +1,21 @@
+<div style="text-align:center">
+  <div class="mt-5">
+    <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+      [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions"
+      (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)">
+    </webcam>
+    <br />
+    <div class="btn_wrap">
+      <button class="btn actionBtn mat-raised-button blue-line-btn-1" (click)="triggerSnapshot();" title="Take Picture">Take
+        Picture</button>
+      <input type="file" accept="image/*" capture="user" #file class="pic-hidden">
+      <button class="btn actionBtn mat-raised-button blue-line-btn-1" (click)="file.click();" title="Take Picture">Take
+        Picture From Gallery</button>
+      <button class="btn actionBtn mat-raised-button blue-line-btn-2" (click)="closeCamera()">Close</button>
+    </div>
+  </div>
+</div>
+<h4 *ngIf="errors.length > 0">Messages:</h4>
+<ul *ngFor="let error of errors">
+  <li>{{error | json}}</li>
+</ul>

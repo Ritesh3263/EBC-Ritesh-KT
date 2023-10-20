@@ -1,0 +1,546 @@
+<section class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="row 0">
+        <div class="col add-brdcmb">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a routerLink="/dashboard">Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a routerLink="/tenant">Tenant</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                {{ pageTitle }}
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div *ngIf="activeForm==1" class="main-div padding-x">
+        <div class="d-flex justify-content-center mb-5">
+          <button type="button" mat-mini-fab class="orange" aria-label="">01</button>
+          <p class="dashed-line"></p>
+          <button (click)="submitFirstForm()" type="button" mat-mini-fab class="orange-light" aria-label="">02</button>
+        </div>
+        <div class="d-flex justify-content-between">
+          <h3 class="form-hadding">{{ pageTitle }}</h3>
+        </div>
+        <form [formGroup]="addForm" (ngSubmit)="submitFirstForm()" class="form_field row justify-content-between">
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Company Name <em>*</em></label>
+            <div class="inpu-t">
+              <mat-form-field appearance="outline" class="w-100">
+                <!-- <mat-label>Ex : Microsoft</mat-label> -->
+                <input [formControl]="addForm.controls['companyName']" matInput placeholder="Ex : Infosys"
+                  maxlength="48" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Code <em>*</em></label>
+            <div [class.inpu-t1]="isEditing">
+              <mat-form-field appearance="outline" class="w-100">
+                <ng-container *ngIf="isEditing">
+                  <input disabled value="{{addForm.controls['code'].value}}" matInput placeholder="Ex : code" />
+                </ng-container>
+                <ng-container *ngIf="!isEditing">
+                  <input [readonly]="isEditing" (input)="onCheckCodeExist()" [formControl]="addForm.controls['code']"
+                    matInput placeholder="Ex : code" />
+                </ng-container>
+              </mat-form-field>
+              <mat-error *ngIf="formErrors?.code">{{formErrors?.code}}</mat-error>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Primary Contact <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['primaryContact']" onlyNumbers matInput
+                  placeholder="Ex : 098645322" minlength="8" maxlength="20"
+                  [class.is-invalid]="addForm.get('primaryContact').invalid && addForm.get('primaryContact').touched" />
+
+                <div
+                  *ngIf="(addForm.get('primaryContact').invalid && addForm.get('primaryContact').touched) || addForm.get('primaryContact').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('primaryContact').errors?.pattern">Contact is
+                    invalid</small>
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Primary Email <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['primaryEmailId']" matInput placeholder="Ex : abc@gmail.com"
+                  [class.is-invalid]="addForm.get('primaryEmailId').invalid && addForm.get('primaryEmailId').touched" />
+
+                <div
+                  *ngIf="(addForm.get('primaryEmailId').invalid && addForm.get('primaryEmailId').touched) || addForm.get('primaryEmailId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('primaryEmailId').errors?.required">Email address is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('primaryEmailId').errors?.pattern">Email address is
+                    invalid</small>
+                </div>
+
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Secondary Contact</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['secondaryContact']" onlyNumbers matInput
+                  placeholder="Ex : 098645322" minlength="8" maxlength="20" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Secondary Email</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput [formControl]="addForm.controls['secondaryEmailId']" placeholder="Ex : abc@gmail.com"
+                  [class.is-invalid]="addForm.get('secondaryEmailId').invalid && addForm.get('secondaryEmailId').touched" />
+
+                <div
+                  *ngIf="(addForm.get('secondaryEmailId').invalid && addForm.get('secondaryEmailId').touched) || addForm.get('secondaryEmailId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('secondaryEmailId').errors?.required">Email address is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('secondaryEmailId').errors?.pattern">Email address is
+                    invalid</small>
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Logo <em>*</em></label>
+            <div class="imageoverlap">
+              <mat-form-field appearance="outline" class="w-100" (click)="fileInput.click()">
+                <input [formControl]="addForm.controls['logo']" matInput readonly placeholder="Upload" />
+                <img class="upload-icon" src="assets/images/Upload.svg" />
+                <input hidden #fileInput accept="image/x-png,image/jpeg" (change)="fileChangeEvent($event)" type="file"
+                  file-model="myFile" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Admin Email <em>*</em></label>
+            <div [class.disabled]="isEditing">
+              <mat-form-field appearance="outline" class="w-100">
+                <input type="email" [readonly]="isEditing" matInput [formControl]="addForm.controls['adminLoginId']"
+                  placeholder="Ex : abc@gmail.com" (change)="verifyEmail()"
+                  [class.is-invalid]="addForm.get('adminLoginId').invalid && addForm.get('adminLoginId').touched" />
+                <div
+                  *ngIf="(addForm.get('adminLoginId').invalid && addForm.get('adminLoginId').touched) || addForm.get('adminLoginId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('adminLoginId').errors?.required">Email address is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('adminLoginId').errors?.pattern">Email address is
+                    invalid</small>
+                </div>
+              </mat-form-field>
+              <mat-error *ngIf="formErrors?.adminLoginId">{{formErrors?.adminLoginId}}</mat-error>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Admin Password <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['new_password']" [type]="hide ? 'password' : 'text'" matInput
+                  placeholder="Admin Password" />
+                <mat-icon matSuffix class="eye-icon3" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}
+                </mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Confirm Admin Password <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['confirm_password']" [type]="hide1 ? 'password' : 'text'"
+                  matInput placeholder="Admin Password" />
+                <mat-icon matSuffix class="eye-icon3" (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' :
+                  'visibility'}}</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Website <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['website']" matInput placeholder="Ex : https://www.infosys.com">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">LinkedIn Id </label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['linkedinId']" matInput placeholder="Ex : https://www.linkedin.com">
+                <!-- <div
+                  *ngIf="(addForm.get('linkedinId').invalid && addForm.get('linkedinId').touched) || addForm.get('linkedinId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('linkedinId').errors?.required">LinkedIn Id is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('linkedinId').errors?.pattern">LinkedIn Id is
+                    invalid</small>
+                </div> -->
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Youtube Id </label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['youtubeId']" matInput placeholder="Ex : https://www.youtube.com">
+                <!-- <div
+                  *ngIf="(addForm.get('youtubeId').invalid && addForm.get('youtubeId').touched) || addForm.get('youtubeId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('youtubeId').errors?.required">Youtube Id is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('youtubeId').errors?.pattern">Youtube Id is
+                    invalid</small>
+                </div> -->
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Facebook Id </label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['facebookId']" matInput placeholder="Ex : https://www.facebook.com">
+                <!-- <div
+                  *ngIf="(addForm.get('facebookId').invalid && addForm.get('facebookId').touched) || addForm.get('facebookId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('facebookId').errors?.required">Facebook Id is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('facebookId').errors?.pattern">Facebook Id is
+                    invalid</small>
+                </div> -->
+              </mat-form-field>
+            </div>
+          </div>
+          <span>Address</span>
+          <hr>
+          <ng-container class="form-group" formGroupName="address">
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Address Name <em>*</em></label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput formControlName="addressName" placeholder="Ex : Primary">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Street</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input (keypress)="validateAddress($event)" matInput formControlName="street"
+                    placeholder="Ex : Street">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Building</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input (keypress)="validateAddress($event)" matInput formControlName="building"
+                    placeholder="Ex : Building">
+                </mat-form-field>
+              </div>
+            </div>
+            <!-- <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Locality</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput formControlName="locality" placeholder="Ex : Locality">
+                </mat-form-field>
+              </div>
+            </div> -->
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Postal Code <em>*</em></label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput number formControlName="postalcode" placeholder="Ex : Postalcode">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">City</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput onlyCharacters formControlName="city" placeholder="Ex : City">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">State</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput onlyCharacters formControlName="state" placeholder="Ex : State">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Country <em>*</em></label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput onlyCharacters formControlName="country" placeholder="Ex : country">
+                </mat-form-field>
+              </div>
+            </div>
+
+          </ng-container>
+          <div class="d-flex justify-content-end margin-y">
+            <!-- <button type="button" mat-raised-button routerBack>
+              Cancel
+            </button> -->
+            <button type="submit" mat-raised-button color="primary">
+              Next
+            </button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="activeForm==2" class="main-div main_container">
+        <!-- <div class="d-flex justify-content-center mb-5">
+          <button (click)="activeForm=1" type="button" mat-mini-fab class="orange-light" aria-label="">01</button>
+          <p class="dashed-line"></p>
+          <button type="button" mat-mini-fab class="orange-" aria-label="">02</button>
+        </div>
+        <div class="d-flex justify-content-between">
+          <h3 class="form-hadding">{{ pageTitle }}</h3>
+        </div> -->
+        <!-- <form [formGroup]="licenseForm" (ngSubmit)="submitForm()" class="form_field row justify-content-between">
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Tier <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select [formControl]="licenseForm.controls['tierId']" (selectionChange)="onTierChange()">
+                  <mat-option *ngFor="let item of tierListArray" [value]="item.id">
+                    {{ item.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">User License <em>*</em></label>
+            <div [class.inpu-t2]="isEditing">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [readonly]="isEditing" [formControl]="licenseForm.controls['userLicense']" matInput
+                  placeholder="Ex : Microsoft" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end margin-y">
+            <button type="button" mat-raised-button routerBack>
+              Cancel
+            </button>
+            <button type="submit" mat-raised-button color="primary">
+              Save
+            </button>
+          </div>
+        </form> -->
+
+        <div class="d-flex justify-content-center">
+          <button (click)="activeForm=1" type="button" mat-mini-fab class="orange-light" aria-label="">01</button>
+          <p class="dashed-line"></p>
+          <button type="button" mat-mini-fab class="orange" aria-label="">02</button>
+        </div>
+        <div class="d-flex justify-content-between form_heading">
+          <h3 class="form-hadding">{{isEditing?'Update':'Add'}} License</h3>
+        </div>
+        <div class="top_header">
+          <div class="row">
+            <div *ngIf="standard" class="col-md-4">
+              <div class="header_col standard">
+                <div class="card_sec">
+                  <div class="card_left">
+                    <h5>Standard </h5>
+                    <p>{{standard?.utilizedCount}}<span style="color: #00000070;">/</span>{{standard?.totalCount}}</p>
+                  </div>
+                  <div class="card_right">
+                    <img src="./assets/images/cards/license_standard.png" class="img-fluid" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="gold" class="col-md-4">
+              <div class="header_col gold">
+                <div class="card_sec">
+                  <div class="card_left">
+                    <h5>Gold </h5>
+                    <p>{{gold?.utilizedCount}}<span style="color: #00000070;">/</span>{{gold?.totalCount}}</p>
+                  </div>
+                  <div class="card_right">
+                    <img src="./assets/images/cards/license_gold.png" class="img-fluid" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="platinum" class="col-md-4">
+              <div class="header_col patinum">
+                <div class="card_sec">
+                  <div class="card_left">
+                    <h5>Platinum </h5>
+                    <p>{{platinum?.utilizedCount}}<span style="color: #00000070;">/</span>{{platinum?.totalCount}}</p>
+                  </div>
+                  <div class="card_right">
+                    <img src="./assets/images/cards/license_silver.png" class="img-fluid" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+        <form [formGroup]="licenseForm" (ngSubmit)="addLicense()" class="pt-3 step_2">
+          <div class="input_column">
+            <div class="form-group input-fildcl">
+              <label for="lname" class="control-label">Add License</label>
+              <div class="inpu-t">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select [formControl]="licenseForm.controls['licenseType']" (selectionChange)="onLicenseChange()"
+                    placeholder="Select Type">
+                    <mat-option *ngFor="let license of licenseListArray" [value]="license?.licenseType">
+                      {{license?.licenseType}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group input-fildcl w-auto">
+              <label for="lname" class="control-label">Count</label>
+              <div class="inpu-t">
+                <!-- <mat-form-field appearance="outline" class="w-100"> -->
+                <div class="input-group inc_dec">
+                  <button (click)="countUpdate('-')" type="button" class="dec">&nbsp; - &nbsp;</button>
+                  <input class="form-control" [formControl]="licenseForm.controls['count']" type="number" autofocus
+                    inputmode="numeric" min="1" [max]="selectedLicense?.availableCount" matInput
+                    [ngClass]="{'error-border': licenseForm.controls['count'].invalid && (licenseForm.controls['count'].dirty || licenseForm.controls['count'].touched)}"
+                    placeholder="Ex : 1" />
+                  <span class="input-group-text"> / {{selectedLicense?.availableCount}}</span>
+                  <button (click)="countUpdate('+')" type="button" class="inc">&nbsp; + &nbsp;</button>
+                </div>
+                <!-- </mat-form-field> -->
+              </div>
+            </div>
+            <div class="form-group ">
+              <label for="lname" class="control-label">Valid From</label>
+              <div class="inpu-t mt-2">
+                <span *ngIf="isEditing">{{objectArray[0].validFrom |date:'MMMM, y'}}</span>
+                <span *ngIf="!isEditing">{{licenseForm.controls['validFrom'].value | date:'MMMM, y'}}</span>
+              </div>
+            </div>
+            <div class="form-group cl">
+              <label for="lname" class="control-label">Valid Till</label>
+              <div class="inpu-t mt-2">
+                <span *ngIf="isEditing">{{objectArray[0].validTo |date:'MMMM, y'}}</span>
+                <span *ngIf="!isEditing">{{licenseForm.controls['validTo'].value | date:'MMMM, y'}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="btn_add">
+            <button type="submit" mat-raised-button color="primary" class="mr-5"><a>+ Add</a></button>
+          </div>
+        </form>
+        <!-- <div *ngIf="isEditing && objectArray.length!=0" class="btn_add mb-3" style="text-align: end;">
+          <button mat-raised-button color="primary" type="button" (click)="onRenew(popupRenew)"
+            class="mr-5">Renew</button>
+        </div> -->
+        <div class="admin-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <!-- <th scope="col">Select</th> -->
+                <th scope="col">License Type</th>
+                <th scope="col">Seater</th>
+                <th scope="col">Valid From</th>
+                <th scope="col">Valid Till</th>
+                <th scope="col">No of Months</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let element of objectArray; let i=index">
+                <!-- <td><input *ngIf="element?.id" class="select_chk" [checked]="element?.isChecked" type="checkbox"
+                    (click)="onCheckboxChange(element,i)"></td> -->
+                <td>{{element?.licenseType}}</td>
+                <td>{{element?.count}}</td>
+                <td>{{element?.validFrom |date:'MMM, y'}}</td>
+                <td>{{element?.validTo |date:'MMM, y'}}</td>
+                <td> {{element?.month}}</td>
+                <td>
+                  <button *ngIf="!element?.id" type="button" (click)="onDelete(i,element)"
+                    class="btn btn-red text-danger">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <!-- <button matTooltip="Renew" *ngIf=" element?.id" type="button" matColumnDef=""
+                    (click)="onRenew(element)" class="btn btn-red text-danger">
+                    <mat-icon>refresh</mat-icon>
+                  </button> -->
+                </td>
+              </tr>
+              <tr *ngIf="objectArray.length==0" class="mat-row no_data">
+                <td class="mat-cell" colspan="6">No data found</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mt-3">
+          </div>
+        </div>
+        <div class="d-flex justify-content-end margin-y">
+          <button (click)="submitForm()" type="submit" mat-raised-button color="primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Renew License-->
+<ng-template #popupRenew>
+  <h1>License Renew</h1>
+  <form [formGroup]="renewalForm" (ngSubmit)="UpdateLicenses()">
+    <div class="admin-table">
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">License Type</th>
+            <th scope="col">Seater</th>
+            <th scope="col">End Date</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="renewal">
+          <tr *ngFor="let item of renewalForm['controls'].renewal['controls']; let i = index; last as last;"
+            [formGroupName]="i">
+            <td>{{item.value['licenseType']}} </td>
+            <td>
+              <input class="form-control seater-input" [formControl]="item.controls['count']" type="number" autofocus
+                inputmode="numeric" min="1" matInput
+                [ngClass]="{'error-border': item.controls['count'].invalid && (item.controls['count'].dirty || item.controls['count'].touched)}"
+                placeholder="Ex : 1" />
+            </td>
+            <td>{{item.value.validTo |date:'MMM, y'}}</td>
+          </tr>
+          <tr *ngIf="objectArray.length==0" class="mat-row no_data">
+            <td class="mat-cell" colspan="6">No data found</td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div class="mt-3">
+      </div>
+
+    </div>
+    <div class="popup-btns">
+      <button type="submit" class="blue-btn">Update</button>
+      <button type="button" class="blue-line-btn" mat-button mat-dialog-close (click)="ClosePopup()">Cancel</button>
+    </div>
+  </form>
+</ng-template>
+
+
+
+
+<loading *ngIf="showLoader"></loading>

@@ -1,0 +1,14 @@
+.dropdown-header {
+  z-index: 100;
+}
+
+.gap {
+  margin: 2px 8px 0px;
+}
+
+.mailid {
+  word-break: break-all;
+  display: inline-block;
+  white-space: break-spaces;
+}
+/*# sourceMappingURL=profile-drop.component.css.map */

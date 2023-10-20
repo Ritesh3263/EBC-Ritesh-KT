@@ -1,0 +1,164 @@
+<section *ngIf="permissionObject?.includes(permissionCode?.dashboard)" class="py-2 my-2 full-height">
+  <!-- Write the dash board related code inside the section tag  -->
+  <div class="container">
+    <div class="head d-flex justify-content-between align-items-end head-margin">
+      <h1 class="title">License</h1>
+      <button mat-raised-button class="mr-5 mb-4 downloadBtn" (click)="download()" title="Download">
+        <mat-icon class="icon-download">download</mat-icon>
+      </button>
+    </div>    
+    <div class="top_header">
+      <div class="row cards_count_cont">
+        <div *ngIf="standard" class="col-md-4">
+          <div class="header_col standard">
+            <div class="card_sec">
+              <div class="card_left">
+                <h5>Standard </h5>
+                <p>{{standard?.utilizedCount}}<span style="color: #00000070;">/</span>{{standard?.availableCount}}<span
+                    style="color: #00000070;">/</span>{{standard?.totalCount}}</p>
+                <span class="u-a">Used</span>/<span class="u-a">Available</span>/<span class="u-a">Total</span>
+              </div>
+              <div class="card_right">
+                <img src="./assets/images/cards/license_standard.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="gold" class="col-md-4">
+          <div class="header_col gold">
+            <div class="card_sec">
+              <div class="card_left">
+                <h5>Gold </h5>
+                <p>{{gold?.utilizedCount}}<span style="color: #00000070;">/</span>{{gold?.availableCount}}<span
+                    style="color: #00000070;">/</span>{{gold?.totalCount}}</p>
+                <span class="u-a">Used</span>/<span class="u-a">Available</span>/<span class="u-a">Total</span>
+              </div>
+              <div class="card_right">
+                <img src="./assets/images/cards/license_gold.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="platinum" class="col-md-4">
+          <div class="header_col patinum">
+            <div class="card_sec">
+              <div class="card_left">
+                <h5>Platinum </h5>
+                <p>{{platinum?.utilizedCount}}<span style="color: #00000070;">/</span>{{platinum?.availableCount}}<span
+                    style="color: #00000070;">/</span>{{platinum?.totalCount}}</p>
+                <span class="u-a">Used</span>/<span class="u-a">Available</span>/<span class="u-a">Total</span>
+
+              </div>
+              <div class="card_right">
+                <img src="./assets/images/cards/license_silver.png" class="img-fluid" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row d-flex "> -->
+  <div class="container" *ngIf="currentUser.userType == 'Tenant Admin' || currentUser.userType == 'BU Admin'">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="top_header m_t">
+          <div class="row">
+            <div *ngIf="gold" class="col-md-5">
+              <h1 class="title">My Usage </h1>
+              <div class="header_col blue">
+                <div class="card_sec">
+                  <div class="card_left d-flex align-items-center res-size">
+                    <h1 class="m-0 clicks">{{mySelfCount}} </h1><span class="span-clicks">Clicks</span>
+                  </div>
+                  <div class="card_left res-size">
+                    <h5 class="m-0">This Month Usage </h5>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!myEmptyData" class="col-md-7">
+              <google-chart #mychart [data]="myLineChart"></google-chart>
+            </div>
+            <div class="col-md-7" *ngIf="myEmptyData">
+              My Usage Count is Empty
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="top_header m_t">
+          <div class="row">
+            <div *ngIf="gold" class="col-md-5">
+              <h1 class="title">Others Usage </h1>
+              <div class="header_col blue">
+                <div class="card_sec">
+                  <div class="card_left d-flex align-items-center res-size">
+                    <h1 class="m-0 clicks">{{othersCount}} </h1><span class="span-clicks">Clicks</span>
+                  </div>
+                  <div class="card_left res-size">
+                    <h5 class="m-0">This Month Usage </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7" *ngIf="!emptyData">
+              <google-chart #companychart [data]="companyLineChart"></google-chart>
+            </div>
+            <div class="col-md-7" *ngIf="emptyData">
+              Yearly Usage Count is Empty
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+  <!-- <div class="row d-flex "> -->
+    <!-- <div class="container" *ngIf="currentUser.userType == 'BU Admin'">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="top_header m_t">
+            <div class="row">
+              <div class="col-md-12">
+                <h1 class="title">BU Usage </h1>
+              </div>
+              <div *ngIf="gold" class="col-md-3">
+                <div class="header_col blue">
+                  <div class="card_sec">
+                    <div class="card_left d-flex align-items-center res-size">
+                      <h1 class="m-0 clicks">77 </h1><span class="span-clicks">Clicks</span>
+                    </div>
+                    <div class="card_left res-size">
+                      <h5 class="m-0">This Month Usage </h5>
+                    </div>
+    
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-9">
+                <div class="row">
+                  <div *ngIf="platinum" class="col-md-6">
+                    <google-chart [data]="lineChart3"></google-chart>
+                  </div>
+                  <div *ngIf="platinum" class="col-md-6">
+                    <google-chart [data]="barChart"></google-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  <!-- </div> -->
+</section>
+
+<div class="error-msg" *ngIf="message">
+  <div>
+    <!-- Based on the License type provided you are not accessible to any function, Please contact the support for further assistance. Your account is suspended, Please contact the support team -->
+    {{message}}
+  </div>
+</div>
+<br><br><br><br>

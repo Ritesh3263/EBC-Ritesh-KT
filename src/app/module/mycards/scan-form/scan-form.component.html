@@ -1,0 +1,126 @@
+<div class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="row m-0 mt-3">
+        <div class="col admin-brdcmb mt-0">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                <a routerLink="/my-cards">My Cards</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Scan Card
+                <!-- {{pageTitle}} -->
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="adbtn col">
+          <!-- <button mat-raised-button color="primary" class="mr-5"><a routerLink="/cards/add">+ Add</a></button> -->
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="d-flex justify-content-between">
+            <h2 class="form-hadding">Scan Card
+              <!-- {{pageTitle}} -->
+            </h2>
+          </div>
+          <div class="d-flex justify-content-between">
+            <p>* Indicates Mandatory attributes</p>
+          </div>
+          <div class="main-div padding-x">
+
+            <form [formGroup]="scanForm" (ngSubmit)="submitForm()" class="form_field row justify-content-between">
+              <div class="form-group w-45 input-fildcl">
+                <label for="lname" class="control-label">Name <em>*</em></label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input onlyCharacters [formControl]="scanForm.controls['name']"
+                      maxlength="50" type="text" matInput placeholder="Ex : Lawrence" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-group w-45 input-fildcl">
+                <label for="lname" class="control-label">Email <em>*</em></label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input [formControl]="scanForm.controls['email']" maxlength="50" type="text" matInput
+                      placeholder="Ex : abcd@gmail.com" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-group w-45 input-fildcl">
+                <label for="lname" class="control-label">Mobile(M) <em>*</em></label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input onlyNumbers [formControl]="scanForm.controls['mobileNumber']"
+                      maxlength="50" type="text" matInput placeholder="Ex : 1234567890" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-group w-45 input-fildcl">
+                <label for="lname" class="control-label">Company Name <em>*</em></label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input [formControl]="scanForm.controls['companyName']" maxlength="50" type="text" matInput
+                      placeholder="Ex : NEC" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-group w-45 input-fildcl">
+                <label for="lname" class="control-label">Designation <em>*</em></label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input [formControl]="scanForm.controls['designation']" maxlength="50" type="text" matInput
+                      placeholder="Ex : Manager" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-group w-45 input-fildcl">
+                <label for="lname" class="control-label">Contact 1</label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input onlyNumbers [formControl]="scanForm.controls['contact1']" maxlength="50" type="text" matInput
+                      placeholder="Ex : 1234567890" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-group w-45 input-fildcl">
+                <label for="lname" class="control-label">Contact 2</label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <input onlyNumbers [formControl]="scanForm.controls['contact2']" maxlength="50" type="text" matInput
+                      placeholder="Ex : 1234567890" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="form-group w-45 input-fildcl">
+                <label for="lname" class="control-label"> </label>
+                <div >
+                  <section class="example-section">
+                    <br/>
+                    <mat-checkbox class="example-margin" [checked]="isChecked" (change)="is_Checked($event)">Save to Contact</mat-checkbox>
+                  </section>
+                  <button type="button" style="display: none;" id="carddown2" vcdDownloadVCard
+                        [generateVCardFunction]="generateVCardOnTheFly">
+                      </button>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end margin-y">
+                <button type="button" class="mat-plain-button" routerBack>
+                  Cancel
+                </button>
+                <button type="submit" class="mat-raised-button">
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

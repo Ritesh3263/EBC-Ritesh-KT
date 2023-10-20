@@ -1,0 +1,127 @@
+::ng-deep .tenant-popup .mat-dialog-container {
+  padding: 0px;
+  border-radius: 20px;
+  -webkit-box-shadow: var(--popup-shadow);
+          box-shadow: var(--popup-shadow);
+}
+
+.main-model {
+  border-style: none;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.main-model .modal-head {
+  text-align: right;
+  background-color: var(--color-light-blue);
+  height: 134px;
+  padding: 5px;
+}
+
+.main-model .modal-head .button-bg {
+  background: transparent;
+  border: none transparent;
+  margin-right: 15px;
+  margin-top: 15px;
+}
+
+.main-model .modal-body h5 {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--color-secondary);
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.main-model .modal-body .px-80 {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.main-model .modal-body .px-80 .d-flex-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.main-model .modal-body .px-80 .pt-5 {
+  padding-top: 2rem !important;
+}
+
+.main-model .modal-body .swip-logo {
+  width: 293px;
+  height: 120px;
+  margin-top: -76px;
+}
+
+.main-model .modal-body .sw-icon {
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  margin-right: 15px;
+}
+
+.main-model .modal-body .sw-icon-info {
+  width: 42%;
+}
+
+.main-model .modal-body .sw-icon-info .green-icon {
+  background: var(--btn-color-green);
+}
+
+.main-model .modal-body .sw-icon-info .yellow-icon {
+  background: var(--color-orange-light);
+}
+
+.main-model .modal-body .sw-icon-info .pink-icon {
+  background: var(--color-light-pink);
+}
+
+.main-model .modal-body .sw-icon-info .blue-icon {
+  background: var(--color-LightBlue);
+}
+
+.main-model .modal-body .sw-icon-info p {
+  color: var(--color-secondary);
+  padding: 0px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.main-model .modal-body .sw-icon-info p small {
+  color: var(--color-gray);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+@media (max-width: 767.98px) {
+  .main-model .modal-head {
+    height: 90px;
+  }
+  .main-model .modal-body .swip-logo {
+    width: 150px;
+    height: 70px;
+  }
+  .main-model .modal-body .px-80 {
+    width: 100%;
+  }
+  .main-model .modal-body .px-80 .d-flex-div {
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+            flex-direction: column !important;
+  }
+  .main-model .modal-body .px-80 .d-flex-div .sw-icon-info {
+    width: 100%;
+  }
+  .main-model .modal-body .px-80 .d-flex-div .sw-icon-info p {
+    font-size: 12px;
+  }
+  .main-model .modal-body .px-80 .pt-5 {
+    padding-top: 1rem !important;
+  }
+}
+/*# sourceMappingURL=tenant-details-popup.component.css.map */

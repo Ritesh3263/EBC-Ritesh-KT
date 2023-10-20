@@ -1,0 +1,231 @@
+.main-page {
+  background-color: var(--color-light-blue);
+  border-radius: 1.5rem;
+  padding: 1rem 2rem;
+
+  .breadcrumb {
+    & a,
+    .active {
+      color: var(--color-secondary);
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 21px;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .main-div {
+    background-color: var(--white);
+    border-radius: 1rem;
+    padding: 20px;
+    box-shadow: 0px 4px 21px rgb(26 88 246 / 17%);
+
+    .table-container{
+      overflow-x: auto;
+    }
+    
+    & table {
+      width: 150%;
+      margin-bottom: 15px;
+      & tr {
+        height: 70px;
+        border-radius: 1rem;
+
+        & th {
+          background: #edf0ff;
+          font-size: 18px;
+          font-weight: 600;
+          text-align: left;
+          color: #1a58f6;
+          border: none;
+          & .mat-icon {
+            vertical-align: sub;
+          }
+        }
+        & th:first-child {
+          padding-left: 55px;
+          border-radius: 0.8rem 0rem 0rem 0.8rem;
+        }
+        & th:last-child {
+          padding-right: 24px;
+          border-radius: 0rem 0.8rem 0.8rem 0rem;
+          text-align: center;
+          width: 15rem;
+        }
+
+        & td {
+          border: none;
+          color: var(--color-secondary);
+          font-size: 16px;
+          line-height: 24px;
+
+          & img {
+            box-shadow: 1px 6px 10px #969696;
+            width: 42px;
+            height: 42px;
+            object-fit: cover;
+            margin-right: 16px;
+          }
+        }
+
+        & td:first-child {
+          padding-left: 55px;
+          border-radius: 0.8rem 0rem 0rem 0.8rem;
+        }
+        & td:last-child {
+          border-radius: 0rem 0.8rem 0.8rem 0rem;
+          text-align: center;
+
+          & button {
+            margin: 0px 5px;
+            border-radius: 10px;
+            line-height: 0;
+          }
+          .btn-green {
+            background-color: var(--btn-color-green);
+          }
+          .btn-red {
+            background-color: var(--btn-color-red);
+          }
+          .btn-yellow {
+            background-color: var(--btn-color-yellow);
+          }
+        }
+      }
+
+      & tr:nth-child(even) {
+        background: var(--color-light-gray);
+      }
+    }
+
+    .pagin-sel {
+      & label {
+        color: var(--black);
+      }
+      .select {
+        border: none;
+        background: var(--color-light-gray);
+        border-radius: 5px;
+        padding: 5px;
+        margin-left: 5px;
+      }
+    }
+
+    .navigation {
+      ul {
+        li {
+          .page-link {
+            border: none !important;
+            background-color: orange;
+          }
+        }
+      }
+    }
+
+  }
+
+  .w-30 {
+    width: 18rem;
+  }
+
+  .admin-brdcmb {
+    margin: 15px 0;
+  }
+}
+
+.mr-5 {
+  margin-right: 5px;
+}
+
+.adbtn {
+  text-align: right;
+  .mat-raised-button {
+    width: 200px;
+    height: 48px;
+    box-shadow: 0px 4px 21px rgba(26, 88, 246, 0.49);
+    border-radius: 10px;
+    margin-left: 15px;
+    background-color: var(--color-primary);
+    color: var(--white);
+    & a {
+      color: var(--white);
+      text-decoration: none;
+    }
+  }
+
+  .mat-stroked-button {
+    height: 48px;
+    width: 200px;
+    border: 2px solid var(--color-primary);
+    border-radius: 10px;
+    margin-left: 5px;
+    & a {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+  }
+}
+
+// responsive code start
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+}
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) {
+}
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+}
+
+// Large devices (desktops, less than 1200px)
+@media (max-width: 1199.98px) {
+  .side_container {
+    .container-fluid {
+      padding-right: 0px;
+      padding-left: 0px;
+    }
+  }
+
+  .adbtn {
+    .mat-raised-button {
+      width: auto;
+      color: var(--white);
+    }
+    .mat-stroked-button {
+      width: auto;
+    }
+  }
+
+  .main-page {
+    .main-div {
+      & table {
+        & tr {
+          & th:last-child {
+            padding-right: 2px;
+            width: auto !important;
+          }
+
+          & th:first-child {
+            padding-left: 15px;
+            width: auto !important;
+          }
+
+          & td:last-child {
+            padding-right: 2px;
+          }
+
+          & td:first-child {
+            padding-left: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+a:hover {
+  cursor: pointer;
+}

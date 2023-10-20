@@ -1,0 +1,42 @@
+<div class="side_container">
+  <div class="card">
+    <div class="card_details">
+      <div class="buttons">
+        <button mat-button class="profile">Profile</button>
+        <button type="submit" *ngIf="permissionObject?.includes(permissionCode?.editProfile)" mat-raised-button
+          [routerLink]="['./edit']" class="edit-profile">Edit Profile </button>
+      </div>
+
+      <div class="row imaged">
+        <div class="col-2 text-center">
+          <img
+            [src]="currentUser?.profilePicture ? currentUser?.profilePicture : 'https://ebcblob.blob.core.windows.net/ebc/DefaultUser.png'"
+            class="rounded-circle border" alt="" width="150px">
+        </div>
+        <div class="col-10">
+          <div class="row">
+            <div *ngIf="currentUser?.firstName" class="col-md-6">
+              <label class="control-label mb-1">First Name</label>
+              <div class="bg-light p-2 disabled">{{currentUser?.firstName}}</div>
+            </div>
+            <div *ngIf="currentUser?.lastName" class="col-md-6">
+              <label class="control-label mb-1">Last Name</label>
+              <div class="bg-light p-2 disabled">{{currentUser?.lastName}}</div>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div *ngIf="currentUser?.primaryContact" class="col-md-6">
+              <label class="control-label mb-1">Phone</label>
+              <div class="bg-light p-2 disabled"> {{currentUser?.primaryContact}}</div>
+            </div>
+            <div *ngIf="currentUser?.emailId" class="col-md-6">
+              <label class="control-label mb-1">Email</label>
+              <div class="bg-light p-2 disabled"> {{currentUser?.emailId}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>

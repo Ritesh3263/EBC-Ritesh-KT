@@ -1,0 +1,10 @@
+/*
+ * Public API Surface of ngx-vcard
+ */
+export * from './lib/ngx-vcard.module';
+export * from './lib/ngx-vcard.formatter';
+export * from './lib/download-vcard.directive';
+export * from './lib/types/vCard';
+export * from './lib/types/vCardEncoding';
+export * from './lib/types/parameter/BasicPropertyParameters.type';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljX2FwaS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uL3Byb2plY3RzL25neC12Y2FyZC9zcmMvcHVibGljX2FwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUVILGNBQWMsd0JBQXdCLENBQUM7QUFDdkMsY0FBYywyQkFBMkIsQ0FBQztBQUMxQyxjQUFjLGdDQUFnQyxDQUFDO0FBQy9DLGNBQWMsbUJBQW1CLENBQUM7QUFDbEMsY0FBYywyQkFBMkIsQ0FBQztBQUMxQyxjQUFjLG9EQUFvRCxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcbiAqIFB1YmxpYyBBUEkgU3VyZmFjZSBvZiBuZ3gtdmNhcmRcbiAqL1xuXG5leHBvcnQgKiBmcm9tICcuL2xpYi9uZ3gtdmNhcmQubW9kdWxlJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL25neC12Y2FyZC5mb3JtYXR0ZXInO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvZG93bmxvYWQtdmNhcmQuZGlyZWN0aXZlJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL3R5cGVzL3ZDYXJkJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL3R5cGVzL3ZDYXJkRW5jb2RpbmcnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvdHlwZXMvcGFyYW1ldGVyL0Jhc2ljUHJvcGVydHlQYXJhbWV0ZXJzLnR5cGUnO1xuXG4iXX0=

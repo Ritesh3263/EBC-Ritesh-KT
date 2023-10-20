@@ -1,0 +1,85 @@
+<div class="wrapper">
+  <div class="main_container">
+    <div class="container">
+      <div class="row main_row">
+        <div class="col-lg-6 col-md-12">
+          <div class="form_container">
+            <div class="header">
+              <div class="logo">
+                <img src="assets/images/logo.svg" class="img-fluid" />
+              </div>
+              <div class="heading">
+                <h1 class="title"> {{'LOGIN.TITLE'|translate}} </h1>
+              </div>
+            </div>
+            <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+              <div class=" form-group paddingLabel required">
+                <div *ngIf="!isAdmin" class="text_field">
+                  <label for="password">{{'LOGIN.TALENTCODE'|translate}} </label>
+                  <mat-form-field appearance="outline" class="w-100 h-60">
+                    <input autocomplete="new-password" type="text" [formControl]="loginForm.controls['tenantCode']"
+                      matInput>
+                    <!-- placeholder="{{'LOGIN.CODEPLACEHOLDER'|translate}}" -->
+                  </mat-form-field>
+                </div>
+                <div class="text_field">
+                  <label for="email_id">{{'LOGIN.EMAIL'|translate}}</label>
+                  <mat-form-field appearance="outline" class="w-100 h-60">
+                    <input autocomplete="new-password" type="email" [formControl]="loginForm.controls['emailId']"
+                      matInput placeholder="{{'LOGIN.EMAILPLACEHOLDER'|translate}}">
+                  </mat-form-field>
+                </div>
+                <div class="text_field">
+                  <label for="password">{{'LOGIN.PASSWORD'|translate}}</label>
+                  <mat-form-field appearance="outline" class="w-100 h-60">
+                    <input autocomplete="new-password" type="password" [formControl]="loginForm.controls['password']"
+                      matInput placeholder="{{'LOGIN.PASSWORDPLACEHOLDER'|translate}}" class="fa fa-eye-slash" [type]="hide ? 'password' : 'text'">
+                      <mat-icon matSuffix class="eye-icon1" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </mat-form-field>
+                </div>
+                <div class="remember_me">
+                  <div class="form-group">
+                    <div class="form-check form-check-inline mr-0">
+                      <!-- <label class="container rememberLabel">{{'LOGIN.REMEMBERME'|translate}}
+                        <input type="checkbox" checked="checked">
+                        <span class="checkmark"></span>
+                      </label> -->
+                    </div>
+                    <a routerLink="/forgot-password" class="forgot_password">{{'LOGIN.FORGOTPASSWORD'|translate}}</a>
+                  </div>
+                </div>
+                <div class="text_field captcha_style" *ngIf="formErrors?.apierror">
+                  <label for="Captcha">{{'LOGIN.CAPTCHA'|translate}}</label>
+                </div>
+                <ng-container *ngIf="formErrors?.apierror">
+                  <div class="text_field">
+                    <span class="captcha noselect">{{loginForm.controls['captcha']?.value}}</span>
+                    <span class="captchabutton m-3" (click)="createCaptcha()">
+                      <mat-icon>cached</mat-icon>
+                    </span>
+                  </div>
+                  <div class="text_field">
+                    <mat-form-field appearance="outline" class="w-100 h-60">
+                      <input type="Captcha" [formControl]="loginForm.controls['reCaptcha']" matInput
+                        placeholder="{{'LOGIN.CAPTCHAPLACEHOLDER'|translate}}">
+                    </mat-form-field>
+                  </div>
+                </ng-container>
+                <div class="button_submit">
+                  <button type="submit" class="loginbutton" [disabled]="showLoader">
+                    {{'LOGIN.LOG_IN'|translate}}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="right_bg">
+            <img src="assets/images/login/authmodule_login_charimage.svg" class="img-fluid img1">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

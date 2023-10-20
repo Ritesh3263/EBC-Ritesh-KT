@@ -1,0 +1,17 @@
+{
+  "LOGIN": {
+    "TITLE": "あなたのアカウントにログイン"
+  },
+  "SIDEBAR": {
+    "DASHBOARD": "ダッシュボード",
+    "ADMIN": "行政",
+    "USER":"ユーザー",
+    "ROLE":"役割",
+    "TENANT":"テナント",
+    "BUSINESSUNIT":"事業単位",
+    "EMPLOYEES":"従業員",
+    "CARDS":"カード",
+    "CONNECTS":"接続します",
+    "MYCARDS":"私のカード"
+  }
+}

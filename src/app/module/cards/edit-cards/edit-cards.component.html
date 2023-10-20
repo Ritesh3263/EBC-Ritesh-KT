@@ -1,0 +1,276 @@
+<section class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="row 0">
+        <div class="col add-brdcmb">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a routerLink="/dashboard">Home</a>
+              </li>
+              <li class="breadcrumb-item"><a routerLink="/cards">Cards</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                {{ pageTitle }} Cards
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div class="main-div">
+        <div class="d-flex justify-content-center padding-x">
+          <!-- <button (click)="checkStep(1)" mat-mini-fab
+            [ngClass]="{'orange': activeForm ==1, 'orange-light' : activeForm !=1 }" aria-label="">
+            01</button> -->
+          <!-- <p class="dashed-line"></p> -->
+          <button (click)="checkStep(2)" mat-mini-fab
+            [ngClass]="{'orange': activeForm ==2, 'orange-light' : activeForm !=2 }" aria-label="">01</button>
+          <p class="dashed-line"></p>
+          <button (click)="checkStep(3)" mat-mini-fab
+            [ngClass]="{'orange': activeForm ==3, 'orange-light' : activeForm !=3 }" aria-label="">02</button>
+        </div>
+        <!-- BU dropdown start -->
+        <div *ngIf="activeForm==1" class="card_heading">
+          <h3 class="form-heading">Business Unit</h3>
+          <div class="text_field">
+            <mat-form-field appearance="outline">
+              <mat-select [(ngModel)]="selectedBUID" placeholder="Select Business Unit"
+                (selectionChange)="onBUChange()">
+                <mat-option *ngFor="let bu of buListArray" [value]="bu?.id">
+                  {{ bu?.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- BU dropdown end -->
+
+
+        <!-- change background image  -->
+        <div *ngIf="activeForm==2" class="placepolder">
+          <div class="row justify-center">
+            <div class="col-md-8">
+              <div class="form_uploadsection">
+                <div class="row">
+                  <!-- <div *ngFor="let item of backgroundImages; let iii=index" class="col-md-6">
+                    <div class="txt_field">
+                      <div class="form-group w-45 input-fildcl">
+                        <label class="control-label">{{(item?.displayName)}}</label>
+                        <div class="">
+                          <mat-form-field appearance="outline" class="w-100" (click)="fileInputo.click()">
+                            <input [value]="item?.imagePathName" matInput readonly placeholder="Upload" />
+                            <img class="upload-icon" src="assets/images/Upload.svg" />
+                            <input hidden #fileInputo accept="image/x-png,image/jpeg"
+                              (change)="onBackgroundChange($event,iii)" type="file" file-model="myFile" />
+                          </mat-form-field>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <!-- <div class="col-md-12">
+                    <div class="btn_changebg">
+                      <button>Change Background</button>
+                    </div>
+                  </div> -->
+
+                </div>
+                <div class="row justify-center">
+                  <div class="col-md-12">
+                    <div class="heading">
+                      <h3>Carousel Items</h3>
+                    </div>
+                  </div>
+                  <form [formGroup]="form" class="row">
+                    <ng-container formArrayName="carouselItems">
+                      <ng-container *ngFor="let item of form.get('carouselItems').controls; let i=index">
+                        <!-- QR Code -->
+                        <ng-container *ngIf="i==0; else elseTemplate">
+                          <div class="col-md-4">
+                            <div class="cards qr_code">
+                              <div class="no">
+                                <span>{{(i<9)? ('0'+(i+1)): (i+1)}}</span>
+                              </div>
+                              <div class="code">
+                                <img class="qr" style="height:130px" src="assets/images/cards/Qr_Code.svg" />
+                                <p>QR Code</p>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                        <!-- Image Upload  -->
+                        <ng-template #elseTemplate>
+                          <div class="col-md-4">
+                            <div class="cards brochure_height">
+                              <div class="cross">
+                                <img  src="../../../../assets/images/cards/cross.png" (click)="removeCarouselItems(i)">
+                              </div>
+                              <div class="no">
+                                <span>{{(i<9)? ('0'+(i+1)): (i+1)}}</span>
+                              </div>
+
+                              <!-- IMAGE -->
+                              <ng-container *ngIf="item?.value.itemValue != '{Video}' && item?.value.itemValue != '{Browchure}'">
+                                <div class="logo">
+                                  <img class="img_nec"  style="height: 130px; width: 100%;" [src]="item?.value.itemValue" />
+                                </div>
+                                <div class="form_field">
+                                  <div class="txt_field">
+                                    <div class="form-group w-45 input-fildcl">
+                                      <div class="imageoverlap">
+                                        <mat-form-field appearance="outline" class="w-100" (click)="fileInputp.click()">
+                                          <input [value]="item?.value.imagePathName" matInput readonly placeholder="Upload" />
+                                          <img class="upload-icon" src="assets/images/Upload.svg" />
+                                          <input hidden #fileInputp accept="image/x-png,image/jpeg"
+                                            (change)="onCarouselImageUpload($event,i)" type="file" file-model="myFile" />
+                                        </mat-form-field>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </ng-container>
+                              <!-- VIDEO -->
+                              <ng-container *ngIf="item?.value.itemValue == '{Video}'">
+                                <iframe *ngIf="item?.value.defaultValue.includes('youtube.com') || item?.value.defaultValue.includes('youtu.be')" width="210" height="130" [src]="item.value.defaultValue |safe"
+                                  title="YouTube video player" frameborder="0"
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  allowfullscreen></iframe>
+                                  <div class="logo" *ngIf="!item?.value.defaultValue">
+                                    <img style="height: 100px; width: 100%;" src="../../../../assets/images/youtubeLogo.jpg" />
+                                  </div>
+                                  <div class="form_field">
+
+                                    <div class="txt_field">
+                                      <div class="form-group w-45 input-fildcl">
+                                        <div class="imageoverlap">
+                                            <mat-form-field appearance="outline" class="w-100 mt-2"
+                                              (change)="onCarouselVideoUpload($event.target.value,i)">
+                                              <input [formControl]="item.controls['defaultValue']" [value]="item?.value.defaultValue" matInput placeholder="Add youtube video link" />
+                                            </mat-form-field>
+                                            <p *ngIf="item.controls['defaultValue'].invalid && (item.controls['defaultValue'].dirty || item.controls['defaultValue'].touched)" class="ytRed">Please enter a valid Youtube link</p>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                              </ng-container>
+                              <!-- PDF -->
+                              <ng-container *ngIf="item?.value.itemValue == '{Browchure}'">
+                                <div class="logo">
+                                  <img style="height: 80px; width: 100%; cursor: pointer;" src="../../../../assets/images/pdfLogo.png" (click)="onPDFClick(item?.value.defaultValue)">
+                                </div>
+                                <div class="form_field">
+                                  <div class="txt_field">
+                                    <div class="form-group w-45 input-fildcl">
+                                      <div class="imageoverlap">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                          <input [formControl]="item.controls['displayName']" [disabled]="(licenseType =='Platinum') ? false : true" [value]="item?.value.displayName" maxlength="25" matInput placeholder="Brochure Title"/>
+                                        </mat-form-field>
+                                        <mat-form-field appearance="outline" class="w-100">
+                                          <input [formControl]="item.controls['defaultValue']" [disabled]="(licenseType =='Platinum') ? false : true" [value]="item?.value.defaultValue" matInput placeholder="Brochure PDF Link"/>
+                                        </mat-form-field>
+                                        <p *ngIf="item.controls['defaultValue'].invalid && (item.controls['defaultValue'].dirty || item.controls['defaultValue'].touched)" class="ytRed">Please enter a valid PDF Link</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </ng-container>
+                            </div>
+                          </div>
+
+                        </ng-template>
+                      </ng-container>
+                    </ng-container>
+                  
+                  <!-- Add Button -->
+                  <div class="col-md-4">
+                    <div class="qr_code">
+                      <div class="code">
+                          <button *ngIf="permissionObject?.includes(permissionCode?.courouselAddImage)"  (click)="addCarouselItems('image')" class="blue-btn">Add
+                            Image</button>
+                          <button *ngIf="permissionObject?.includes(permissionCode?.courouselAddVideo)"  (click)="addCarouselItems('video')"
+                            class="blue-btn mt-2">Add Video</button>
+                          <button *ngIf="permissionObject?.includes(permissionCode?.courouselAddBrochure) && licenseType=='Platinum'"  (click)="addCarouselItems('brochure')"
+                              class="blue-btn mt-2">Add Brochure</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                  <!-- <div class="col-md-12">
+                    <div class="btn_save_cancel">
+                      <button class="btn_save">Save</button>
+                      <button class="btn_cancel">Cancel</button>
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card_container">
+                <div class="card_item card_width">
+                  <div class="card_column">
+                    <div id="selectedmyFrame2"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="btn_card_next">
+                <button (click)="submitSecondForm()" [disabled]="!form.valid" class="blue-btn">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Card template -->
+        <div *ngIf="activeForm==3" class="placepolder">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card_template">
+                <div class="heading">
+                  <h3>Card Template</h3>
+                </div>
+                <div class="card_attr">
+                  <div class="attr_container">
+                    <div class="item heading">
+                      <h3>Attributes</h3>
+                      <h3>Editable</h3>
+                    </div>
+
+                    <ng-container *ngFor="let attribute of attributesList; let i=index">
+                      <div class="item" *ngIf="attribute?.isDynamic">
+                        <label>{{(attribute?.displayName)}}</label>
+                        <div class="checkbox">
+                          <label class="container">
+                            <mat-checkbox type="checkbox" [checked]="attribute?.isEditable"
+                              (change)="onCheckAttribute($event,i)"></mat-checkbox>
+                          </label>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-5">
+              <div class="card_container">
+                <div class="card_item card_width">
+                  <div class="card_column">
+                    <div id="selectedmyFrame3"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-md-flex flex-wrap mt-5 justify-content-center align-items-center">
+                <span></span>
+                <div class="text-md-right d-flex">
+                  <button type="button" class="blue-line-btn" mat-raised-button routerBack>
+                    Cancel
+                  </button>
+                  <button (click)="submitThirdForm()" class="blue-btn">Save</button>
+                </div>
+              </div>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

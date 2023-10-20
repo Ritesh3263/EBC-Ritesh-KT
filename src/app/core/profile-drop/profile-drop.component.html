@@ -1,0 +1,45 @@
+<div>
+  <div class="dropdown-header">
+    <div class="media d-user">
+      <span class="bg-white rounded-circle p-2 font-weight-bold mr-2 rounded_circle_profile"
+        style="width: 60px; height: 60px; background-color: #e4e3f3 !important;">
+        <img [src]="currentUserDetail?.profilePicture ? currentUserDetail?.profilePicture : 'https://ebcblob.blob.core.windows.net/ebc/DefaultUser.png'"
+
+        alt="" style="width: 60px; height: 60px; border-radius: 50px;"/>
+      </span>
+      <div class="media-body" style="
+      transform: translate(13px, 0px);">
+        <h5 class="mt-0 mb-0">{{currentUserDetail?.firstName}} {{currentUserDetail?.lastName}} [{{currentUserDetail?.role}}]</h5>
+        <span class="mailid">{{currentUserDetail?.emailId}}</span>
+      </div>
+    </div>
+  </div>
+  <a class="dropdown-item d-flex align-items-center" routerLink="/profile" title="My Profile">
+    <i class="la la-user fa-2x mr-2"></i>
+    <p class="gap"> My Profile </p>
+  </a>
+  <a *ngIf="currentUserDetail?.userType =='Tenant Admin'" class="dropdown-item d-flex align-items-center"
+    routerLink="/tenant-profile" title="Tenant Profile">
+    <i class="la la-cog fa-2x mr-2"></i>
+    <p class="gap"> Tenant Profile </p>
+  </a>
+  <a *ngIf="currentUserDetail?.userType =='BU Admin'" class="dropdown-item d-flex align-items-center"
+    routerLink="/bu-profile" title="Business Unit Profile">
+    <i class="la la-cog fa-2x mr-2"></i>
+    <p class="gap"> Business Unit Profile </p>
+  </a>
+  <!-- <a class="dropdown-item d-flex align-items-center" routerLink="/setting" title="Setting">
+    <i class="la la-cog fa-2x mr-2"></i> Setting </a> -->
+  <div class="dropdown-divider"></div>
+  <a class="dropdown-item d-flex align-items-center" routerLink="/profile/change-password" title="Change Password">
+    <i class="la la-lock fa-2x mr-2"></i>
+    <p class="gap"> Change Password </p>
+  </a>
+  <!-- <a class="dropdown-item d-flex align-items-center" title="Go to My Console"><i class="la la-eye fa-2x mr-2"></i> Go to
+    My Console </a> -->
+  <a class="dropdown-item d-flex align-items-center" (click)="onLogOut()" title="Sign Out"><i
+      class="la la-sign-out fa-2x mr-2"></i>
+    <p class="gap"> Sign Out </p>
+  </a>
+
+</div>

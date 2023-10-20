@@ -1,0 +1,32 @@
+.rounded_circle_profile{
+  align-items: center;
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: center;
+  margin-right: -5px;
+  margin-left: -5px;
+  width: 50px;
+}
+
+.dropdown-header .media{
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width:575px){
+  .banner_img{
+    display: none;
+  }
+  .auth-box{
+    height: 100vh;
+  }
+  .auth-box.private-card{
+    border-radius: 0;
+  }
+  .auth-box{
+    padding:30px 34px;
+  }
+  .container{
+    padding:0 !important;
+  }
+}

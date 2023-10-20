@@ -1,0 +1,133 @@
+<div *ngIf="!isCameraShow" class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="row m-0 mt-3">
+        <div class="col admin-brdcmb mt-0">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                My Cards
+              </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="adbtn col">
+          <!-- <button mat-raised-button color="primary" class="mr-5"><a routerLink="/cards/add">+ Add</a></button> -->
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="d-flex justify-content-between">
+            <h2 class="form-hadding">My Cards</h2>
+          </div>
+          <div class="d-flex justify-content-between">
+            <p>* Indicates Mandatory attributes</p>
+          </div>
+
+
+          <div *ngIf="permissionObject?.includes(permissionCode?.myCardList)" class="cards_container">
+            <div class="card_item" *ngIf="objectArray">
+              <div class="card_column">
+                <div id="mYYcardFrame" class="card-width"></div>
+                <div class="cards_status">
+                  <div class="status">
+                    <div class="status_button">
+                      <button class="btns" *ngIf="permissionObject?.includes(permissionCode?.updateMyCard)"
+                        routerLink="/profile/edit">
+                        <mat-icon>edit</mat-icon> Edit
+                      </button>
+
+                      <input type="file" accept="image/*" capture="environment" #file class="pic-hidden" (change)="uploafFromGallery($event)">
+                      <button *ngIf="permissionObject?.includes(permissionCode?.scanMyCard)" class="btns"
+                        (click)="file.click()">
+                        <mat-icon>camera</mat-icon> Scan
+                      </button>
+
+                      <input type="file" accept="image/*" #fileUpload class="pic-hidden" (change)="uploafFromGallery($event)">
+                      <button *ngIf="permissionObject?.includes(permissionCode?.scanMyCard)" class="btns"
+                        (click)="fileUpload.click()">
+                        <mat-icon>camera</mat-icon> Upload
+                      </button>
+
+                      <button *ngIf="permissionObject?.includes(permissionCode?.previewMyCard)" class="btns"
+                        type="button" (click)="onPreview()">
+                        <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+                          aria-hidden="true" data-mat-icon-type="font">remove_red_eye</mat-icon>Preview
+                      </button>
+                      <button style="display: none;" id="carddown2" vcdDownloadVCard
+                        [generateVCardFunction]="generateVCardOnTheFly">
+                      </button>
+
+                      <a [href]="appleWalletURL" style="display: none;" id="apple_pass"> </a>
+                      <button *ngIf="permissionObject?.includes(permissionCode?.addCardINWallet)"
+                        class="btns d-flex wallet-btn" (click)="addToWallet()" type="button">
+                        <img style="height: 20px;" src="assets/images/wallet-png.png" alt="wallet">
+                        <div>
+                          <h6>Add to</h6>
+                          <h5>Apple Wallet</h5>
+                        </div>
+                      </button>
+
+                    </div>
+                  </div>
+                  <br>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="noCardFound">
+              <h1>No Card found, Please select Bussiness Unit and Assign Card from Card Management.</h1>
+            </div>
+            <a style="display: none;" id="apple-pass-card" href="{{cardLink}}">link</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<loading *ngIf="loadingState"></loading>
+
+<div *ngIf="isCameraShow" class="process-section">
+  <ng-container *ngIf="!isImageConfirm">
+    <!-- <app-camera (close)="handleClose()" (pictureTaken)="handleImage($event)"></app-camera> -->
+    <div style="text-align:center">
+      <div class="mt-5">
+        <!-- <webcam [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+          [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions"
+          (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)">
+        </webcam> -->
+        <br />
+        <div class="btn_wrap">
+          <!-- <button class="btn actionBtn mat-raised-button blue-line-btn-1" (click)="triggerSnapshot();" title="Take Picture">Take
+            Picture</button> -->
+
+          <button class="btn actionBtn mat-raised-button blue-line-btn-1" (click)="file.click();" title="Upload Picture">Upload Picture</button>
+          <button class="btn actionBtn mat-raised-button blue-line-btn-2" (click)="closeCamera()">Close</button>
+        </div>
+      </div>
+    </div>
+    <h4 *ngIf="errors.length > 0">Messages:</h4>
+    <ul *ngFor="let error of errors">
+      <li>{{error | json}}</li>
+    </ul>
+  </ng-container>
+
+  <div *ngIf="isImageConfirm" class="process-section">
+
+    <div class="guest-details mt-5">
+
+      <div class="col-12 dummyId">
+        <div *ngIf="webcamImage" class="image">
+          <img class="img_preview" width="90%" [src]="webcamImage.imageAsDataUrl" />
+        </div>
+      </div>
+      <div class="btn_wrap">
+        <button (click)="isImageConfirm=!isImageConfirm" class="btn mat-plain-button blue-line-btn-2">Retake</button>
+        <button (click)="submitConfirmImage()" routerLink="/my-cards/scan-card"
+          class="btn mat-raised-button blue-line-btn-1">Submit</button>
+      </div>
+
+    </div>
+  </div>
+</div>

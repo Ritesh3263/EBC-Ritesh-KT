@@ -1,0 +1,114 @@
+
+<div class="delet-popup text-center">
+  <!-- Delete -->
+  <ng-container *ngIf="data?.isDelete">
+    <img src="assets/images/delete-icon.svg">
+    <h3>Are you sure you want to delete <br> {{data?.name}} ?</h3>
+    <div class="text-center">
+      <button (click)="onDelete()" class="blue-line-btn-1">Delete</button>
+      <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Cancel</button>
+    </div>
+  </ng-container>
+  <!-- Suspend -->
+  <ng-container *ngIf="data?.isSuspend">
+    <img src="assets/images/errorIcon.png">
+    <h3>Are you sure you want to {{data?.suspendFlag ? 'suspend' : 'activate'}} <br>{{data?.name}} ?</h3>
+    <div class="text-center">
+      <button (click)="onDelete()" class="blue-line-btn-1">Yes</button>
+      <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Cancel</button>
+    </div>
+  </ng-container>
+
+  <!-- isSessionTimeOut -->
+  <ng-container *ngIf="data?.isSessionTimeOut" class="session">
+    <img src="assets/images/timer-out.png">
+    <h3>Session Time Out </h3>
+    <div class="text-center">
+      <button (click)="close()" mat-dialog-close class="blue-btn">OK</button>
+    </div>
+  </ng-container>
+
+  <!-- isEnquiry -->
+  <ng-container *ngIf="data?.isEnquiry" class="session">
+    <img style="border-radius: 50%;" src="assets/images/tick-circle.png">
+    <h3>Enquiry form submitted</h3>
+    <div class="text-center">
+      <button (click)="close()" mat-dialog-close class="blue-btn">OK</button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="data?.isApproved" class="session">
+    <img style="border-radius: 50%;" src="assets/images/tick-circle.png" *ngIf="data?.type == 'approve'">
+    <img style="border-radius: 50%;" src="assets/images/errorIcon.png" *ngIf="data?.type == 'reject'">
+    <h3>{{data?.msg}}</h3>
+    <div class="text-center">
+      <button (click)="close()" mat-dialog-close class="blue-btn">OK</button>
+    </div>
+  </ng-container>
+
+
+  <div class="text text-center more_popup">
+    <!-- Other View Popup -->
+    <ng-container *ngIf="data?.otherView" class="session">
+        
+      <!-- <img src="assets/images/card_user.jpg"> -->
+      <div class="d-flex list_cont">
+        <h3 *ngFor="let ar of data?.createdArray?.contactOwnerName; let i = index" (click)="onPreview(ar, i)">{{ar}}</h3>
+      </div>
+        <div class="text-center btn_more">
+        <button (click)="close()" mat-dialog-close class="blue-btn btn_more">OK</button>
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="data?.requestDownload" class="session">
+
+  <div class="text text-center request_popup">
+    
+      <div class="text-right">
+        <button mat-icon-button class="btn_close" (click)="close()">
+          <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+      </div>
+      <div class="form-group w-90 input-fildcl">
+        <label for="lname" class="control-label reason_lbl">Reason for Request :</label>
+        <div class="inpu-t">
+          <mat-form-field appearance="outline" class="w-100">
+            <textarea matInput [(ngModel)]="reason" #textar placeholder="Enter the reason here"></textarea>
+            
+          </mat-form-field>
+        </div>
+        
+      </div>
+      <div class="text-center btn_more">
+        <button (click)="onReasonSubmit(textar.value)" mat-dialog-close class="blue-btn btn_more">Submit</button>
+      </div>
+    
+  </div>
+  </ng-container>
+
+  <div class="text text-center ">
+    
+    <!-- Other View Popup -->
+    <ng-container *ngIf="data?.approval" class="session">
+      <!-- <div class="text-right">
+        <button mat-icon-button class="btn_close" (click)="close()">
+          <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+      </div> -->
+      <!-- <img src="assets/images/card_user.jpg"> -->
+      <div class="d-flex list_cont">
+        
+      </div>
+        <div class="text-center btn_more">
+          <div class="text-left p-5">
+            <h3>Reason :</h3>
+            <h4 class="reason-desc">{{data?.reason}}</h4>
+          </div>
+        <button (click)="close()" mat-dialog-close class="blue-btn btn_more btn_reason">OK</button>
+      </div>
+    </ng-container>
+  </div>
+    
+</div>
+

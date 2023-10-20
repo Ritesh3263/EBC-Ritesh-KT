@@ -1,0 +1,74 @@
+::ng-deep .delete-popup .mat-dialog-container {
+  border-radius: 20px;
+}
+
+::ng-deep .mat-dialog-container {
+  border-radius: 15px;
+  padding: 55px;
+}
+
+.delet-popup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 300px;
+  width: 500px;
+}
+
+.delet-popup img {
+  width: 128px;
+  height: 128px;
+}
+
+.delet-popup h3 {
+  color: var(--color-secondary);
+  font-weight: 500;
+  font-size: 22px;
+  margin: 2rem 0rem 3rem 0rem;
+}
+
+.delet-popup .blue-btn {
+  width: 200px;
+  height: 48px;
+  -webkit-box-shadow: 0px 4px 21px rgba(26, 88, 246, 0.49);
+          box-shadow: 0px 4px 21px rgba(26, 88, 246, 0.49);
+  border-radius: 10px;
+  margin-left: 15px;
+  background-color: var(--color-primary);
+  color: var(--white);
+  border: 2px solid var(--color-primary);
+  text-decoration: none;
+}
+
+.delet-popup .blue-btn:hover {
+  color: var(--color-primary);
+  background-color: var(--white);
+}
+
+.delet-popup .blue-line-btn {
+  background-color: var(--white);
+  height: 48px;
+  width: 200px;
+  border: 2px solid var(--color-primary);
+  border-radius: 10px;
+  margin-left: 5px;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.delet-popup .blue-line-btn:hover {
+  background-color: var(--color-primary);
+  color: var(--white);
+  border: 2px solid var(--color-primary);
+}
+/*# sourceMappingURL=success-popup.component.css.map */

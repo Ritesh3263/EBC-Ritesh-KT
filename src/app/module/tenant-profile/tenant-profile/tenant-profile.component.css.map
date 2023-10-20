@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "tenant-profile.component.scss"
+    ],
+    "names": [],
+    "file": "tenant-profile.component.css"
+}

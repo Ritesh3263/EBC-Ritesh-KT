@@ -1,0 +1,436 @@
+<section class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="row 0">
+        <div class="col add-brdcmb">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a routerLink="/dashboard">Home</a>
+              </li>
+              <li class="breadcrumb-item"><a routerLink="/user">User</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                {{ pageTitle }}
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div class="main-div padding-x">
+        <div class="d-flex justify-content-between">
+          <h3 class="form-hadding">{{ pageTitle }}</h3>
+        </div>
+        <form [formGroup]="addForm" (ngSubmit)="submitForm()" class="form_field row justify-content-between">
+          <div *ngIf="currentUser?.userType == 'Tenant Admin' || currentUser?.userType == 'BU Admin'"
+            class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">License <em>*</em></label>
+            <div *ngIf="isEditing && editObject && editObject?.licenseType" class="disabled">
+              <mat-form-field appearance="outline" class="w-100">
+                <input type="text" disabled [value]="editObject?.licenseType" matInput />
+              </mat-form-field>
+              <a class="change-license" (click)="isChangeLicenses=!isChangeLicenses">Change Licenses</a>
+            </div>
+            <div *ngIf="isChangeLicenses">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select [formControl]="addForm.controls['licenseType']" (selectionChange)="onLicenseChange()"
+                  placeholder="Select Type">
+                  <mat-option *ngFor="let item of licenseListArray" [value]="item?.licenseType">
+                    {{ item?.licenseType }} (Available) - {{ item?.availableCount }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Role <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-select [formControl]="addForm.controls['roleId']" (selectionChange)="onRoleChange()">
+                  <mat-option *ngFor="let item of roleListArray" [value]="item?.id">
+                    {{ item?.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="checkboxes_parent d-flex">
+              <div>
+                <mat-checkbox [checked]="this.editObject?.isMarketingPerson" (change)="is_Checked($event)"
+                  class="example-margin">Marketing role</mat-checkbox>
+              </div>
+              <div *ngIf="roleChecked">
+                <mat-checkbox [checked]="isDownLoad" (change)="isDownLoadChecked($event)" class="example-margin">
+                  Download
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="currentUser?.userType != 'Super Admin'" class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Business Unit <em>*</em></label>
+            <div class="">
+              <ng-container *ngIf="isMultipleBU; else BUIDTemplate">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select multiple (selectionChange)="onBUChange()"
+                    [formControl]="addForm.controls['businessUnitIds']">
+                    <mat-option *ngFor="let item of buListArray" [value]="item.code">
+                      {{ item.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </ng-container>
+              <ng-template #BUIDTemplate>
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select (selectionChange)="singleBUChange()" [formControl]="addForm.controls['businessUnitIds']">
+                    <mat-option *ngFor="let item of buListArray" [value]="item.code">
+                      {{ item.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-error *ngIf="formErrors?.businessUnitIds">{{formErrors?.businessUnitIds}}</mat-error>
+                <a *ngIf="formErrors?.businessUnitIds" [routerLink]="['/cards/add']"
+                  [queryParams]="{bu: addForm?.controls['businessUnitIds']?.value}">assign the Template</a>
+              </ng-template>
+
+
+            </div>
+          </div>
+          <div *ngIf="isDownLoad" class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Approver <em>*</em></label>
+            <div class="">
+              <!-- <mat-form-field appearance="outline" class="w-100">
+                <input matInput [formControl]="addForm.controls['approverId']">
+                <mat-select [formControl]="addForm.controls['approverId']">
+                  <mat-option *ngFor="let item of approverList" [value]="item?.id">
+                    {{ item?.fullName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field> -->
+              <mat-form-field appearance="outline" class="w-100">
+                <input type="text"
+                  aria-label="Number"
+                  matInput
+                  [matAutocomplete]="auto"
+                  [formControl]="addForm.controls['approverId']"
+                >
+                <mat-autocomplete [displayWith]="getTitle.bind(this)"  #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptions" [value]="option?.id">
+                    {{option?.name}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">First Name </label>
+            <div class="inpu-t">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['firstName']" maxlength="50" matInput
+                  placeholder="Ex : Jack" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Last Name <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['lastName']" maxlength="50" type="text" matInput
+                  placeholder="Ex : Rider" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Native Name</label>
+            <div class="inpu-t">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['nativeName']" onlyCharacters matInput placeholder="Ex : Jack"
+                  maxlength="48" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label"> Email <em>*</em></label>
+            <div [ngClass]="{'disabled': isEditing}">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [readonly]="isEditing" [formControl]="addForm.controls['emailId']" type="email" matInput
+                  placeholder="Ex : abc@gmail.com" (change)="verifyEmail()"
+                  [class.is-invalid]="addForm.get('emailId').invalid && addForm.get('emailId').touched" />
+                <div
+                  *ngIf="(addForm.get('emailId').invalid && addForm.get('emailId').touched) || addForm.get('emailId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('emailId').errors?.required">Email address is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('emailId').errors?.pattern">Email address is
+                    invalid</small>
+                </div>
+
+              </mat-form-field>
+              <mat-error *ngIf="formErrors?.emailId">{{formErrors?.emailId}}</mat-error>
+            </div>
+          </div>
+
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Designation <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['designation']" onlyCharaterAndHyphen type="text" matInput
+                  placeholder="Ex : Engineer" maxlength="48" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Primary Contact <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['primaryContact']" onlyNumbers matInput
+                  placeholder="Ex : 098645322" minlength="8" maxlength="20" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Secondary Contact</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['secondaryContact']" onlyNumbers matInput
+                  placeholder="Ex : 098645322" minlength="8" maxlength="20" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Profile Picture <em>*</em> </label>
+            <div class="imageoverlap">
+              <mat-form-field appearance="outline" class="w-100" (click)="fileInputProfile.click()">
+                <input [formControl]="addForm.controls['profilePicture']" matInput readonly placeholder="Upload" />
+                <img class="upload-icon" src="assets/images/Upload.svg" />
+                <input hidden #fileInputProfile accept="image/x-png,image/jpeg" (change)="profileChangeEvent($event)"
+                  type="file" file-model="myFile" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- <div class="form-group w-45 input-fildcl mb-5">
+            <label for="lname" class="control-label">LinkednIn Id </label>
+            <div class="imageoverlap">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['linkedId']" matInput
+                  placeholder="Ex : https://www.linkedIn.com">
+                <div   
+                  *ngIf="(addForm.get('linkedinId').invalid && addForm.get('linkedinId').touched) || addForm.get('linkedinId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('linkedinId').errors?.required">LinkedIn Id is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('linkedinId').errors?.pattern">LinkedIn Id is
+                    invalid</small>
+                </div>
+              </mat-form-field>
+            </div>
+          </div> -->
+
+          <!-- ============ password ============ -->
+
+          <!-- <div *ngIf="!isEditing" class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Password <em>*</em></label>
+            <div class="imageoverlap">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="addForm.controls['password']"
+                  placeholder="*********" />
+                  <img class="eye-icon" src="../../../../assets/images/hidden.png" />
+                  <img class="eye-icon" src="../../../../assets/images/visibility.png" />
+                  <mat-icon matSuffix class="eye-icon" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+            </div>
+          </div> -->
+
+          <!-- =================  Address ============ -->
+
+          <!-- <ng-container class="form-group" formGroupName="address">
+            <div class="division">
+              <span>Address</span>
+              <hr>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Street</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput formControlName="street" placeholder="Ex : Street">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Building</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput formControlName="building" placeholder="Ex : Building">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Locality</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput formControlName="locality" placeholder="Ex : Locality">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Postalcode</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input number matInput formControlName="postalcode" placeholder="Ex : Postalcode">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">City</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput formControlName="city" placeholder="Ex : City">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">State</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput formControlName="state" placeholder="Ex : State">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Country</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput formControlName="country" placeholder="Ex : country">
+                </mat-form-field>
+              </div>
+            </div>
+
+          </ng-container> -->
+
+          <!-- ============ Dynamic BU fields  ============ -->
+          <!-- <div *ngIf="attributeArray && attributeArray?.value?.length>0" class="division">
+
+            <span>Dynamic BU fields</span>
+            <hr />
+          </div>
+          <ng-container formArray="attributeArray" *ngFor="let item of attributeArray?.controls; let i = index">
+            <div [formGroup]="item" class="form-group w-45">
+              <ng-container *ngIf="attributeList[i]?.attributeType?.toLowerCase() == 'image'
+                  else elseTemplate
+                ">
+                <div class="input-fildcl">
+                  <label for="lname" class="control-label">{{ attributeDisplayFieldsName[i] }}</label>
+                  <div class="">
+                    <mat-form-field appearance="outline" class="w-100" (click)="fileInput.click()">
+                      <input [formControl]="
+                          item['controls'][attributeFieldsName[i] + '_img']
+                        " matInput readonly
+                        placeholder="Upload {{ attributeFieldsName[i].replace('{','')?.replace('}','') }}" />
+                      <img class="upload-icon" src="assets/images/Upload.svg" />
+                      <input hidden #fileInput accept="image/x-png,image/jpeg" (change)="fileChangeEvent($event, i)"
+                        type="file" file-model="myFile" />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <div class="input-fildcl">
+                  <label for="lname" class="control-label">{{attributeDisplayFieldsName[i] }} </label>
+                  <div class="">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <input [formControl]="item['controls'][attributeFieldsName[i]]" type="text" matInput
+                        [placeholder]="attributeFieldsName[i].replace('{','')?.replace('}','')" />
+                    </mat-form-field>
+                  </div>
+                </div>
+              </ng-template>
+
+            </div>
+          </ng-container> -->
+          <hr>
+          <form [formGroup]="addSocialForm" #formDirective="ngForm"  (ngSubmit)="addItem(formDirective)" class="row d-flex justify-content-between">
+            <div class="form-group w-30 input-fildcl">
+              <label for="lname" class="control-label">Social Media </label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100" >
+                  <mat-select placeholder="Ex : Facebook, Linkedin..." [formControl]="addSocialForm.controls['socialFeildName']">
+                    <mat-option *ngFor="let item of socialFeilds" [value]="item?.key" (click)="selectSocialield(item)" [disabled]="item.isSelected" >
+                      {{item?.key}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-30 input-fildcl ">
+              <label for="lname" class="control-label">Link </label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput
+                    [formControl]="addSocialForm.controls['link']"
+                    [placeholder]="dynamicPlaceholder">
+                </mat-form-field>
+                <div *ngIf="addSocialForm.get('link')?.errors?.pattern">
+                  <p class="has-error">
+                    Invalid pattern
+                  </p>
+               </div>
+              </div>
+            </div>
+            <div class="form-group w-30 input-fildcl">
+              <label for="lname" class="control-label">Display Value </label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input [formControl]="addSocialForm.controls['quant']" matInput
+                    placeholder="Ex : John Wick">
+                </mat-form-field>
+              </div>
+            </div>
+            <button class="w-10 add-btn-orange" type="submit" mat-raised-button [disabled]="disAddBtn">
+              {{isSocialEdit ? 'Update' : 'Add'}}
+            </button>
+          </form>
+
+          <div class="col-lg-12 mt-5" *ngIf="userSocialList.length > 0">
+            <div class="main-div">
+              <div class="admin-table">
+                <table class="">
+                  <tr>
+                    <th> Social Media </th>
+                    <th> Link </th>
+                    <th> Display Value </th>
+                    <th> Action </th>
+                  </tr>
+                  <tr *ngFor="let item of userSocialList; let i = index">
+                    <td>{{item?.key}}</td>
+                    <td>{{item?.link}}</td>
+                    <td>{{item?.displayName}}</td>
+                    <td>
+                      <button type="button" class="btn btn-green text-success" (click)="editUserSocialList(item, i)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button type="button" class="btn btn-red text-danger" (click)="delUserSocialList(item, i)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                      <!-- <div class="d-inline">
+                      <button type="button" class="btn btn-blue text-primary">
+                        <mat-icon>visibility</mat-icon>
+                      </button>
+                      </div> -->
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end margin-y">
+            <button type="button" mat-raised-button routerBack>
+              Cancel
+            </button>
+            <button type="submit" mat-raised-button color="primary">
+              {{isEditing?'Update':'Save'}}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

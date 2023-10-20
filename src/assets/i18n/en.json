@@ -1,0 +1,60 @@
+{
+  "LOGIN": {
+    "TITLE": "Login to your account",
+    "TALENTCODE":"Tenant Code",
+    "EMAIL":"Email Id",
+    "PASSWORD":"Password",
+    "REMEMBERME":"Remember Me",
+    "FORGOTPASSWORD":"Forgot password?",
+    "LOG_IN":"Log In",
+    "CODEPLACEHOLDER":"EBC",
+    "EMAILPLACEHOLDER":"jhonsnow@gmail.com",
+    "PASSWORDPLACEHOLDER":"********* ",
+    "CAPTCHA":"Captcha",
+    "CAPTCHAPLACEHOLDER": "Enter Captcha"
+
+  },
+  "SIDEBAR": {
+    "DASHBOARD": "Dashboard",
+    "ADMIN":"Admin",
+    "USER":"User",
+    "ROLE":"Role",
+    "TENANT":"Tenant",
+    "BUSINESSUNIT":"Business Unit",
+    "EMPLOYEES":"Employees",
+    "CARDS":"Cards Management",
+    "CONNECTS":"Connects",
+    "MYCARDS":"My card"
+  },
+  "FORGOT_PASSWORD":{
+    "FORGOTPASSWORD":"Forgot Password",
+    "EMAILTAG":"Enter your registered mail id to send OTP",
+    "EMAIL":"Email ID",
+    "EMAILPLACEHOLDER":"jhonsnow@gmail.com",
+    "OTP":"Send OTP"
+
+  },
+
+  "RESETPASSWORD":{
+    "SETNEWPASSOWORD":"Set a New Password",
+    "MESSAGE":"Your New Password should contain atleast 6 characters",
+    "NEWPASSWORD":"New Password",
+    "CONFIRMPASSWORD":"Confirm Password",
+    "PLACEHOLDER":"*************",
+    "RESET_PASSWORD":"Reset Password"
+
+  },
+
+  "VERIFYOTP":{
+    "VERIFICATION":"Verification",
+    "MESSAGE":"Please Enter the OTP code sent to your Email ID",
+    "OTP":"OTP",
+    "VERIFY_OTP":"Verify OTP"
+
+  },
+  "BUTTON":{
+    "BACK":"Back",
+    "ADD":"Add"
+  }
+
+}

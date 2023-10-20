@@ -1,0 +1,62 @@
+<div class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="row m-0 mt-3">
+        <div class="col admin-brdcmb mt-0">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a routerLink="/dashboard">Home</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">Cards</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="adbtn col" *ngIf="permissionObject?.includes(permissionCode?.addCard)">
+          <button mat-raised-button color="primary" routerLink="add" [queryParams]="{bu: selectedBUCode}" class="mr-5">
+            <a>+ Add</a>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form_field">
+          <mat-form-field appearance="outline">
+            <!-- [disabled]="currentUser.userType == 'BU Admin'" -->
+            <mat-select [(ngModel)]="selectedBUCode" placeholder="Select Business Unit"
+              (selectionChange)="getObjects()">
+              <mat-option *ngFor="let bu of buListArray" [value]="bu?.code">
+                {{ bu?.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-lg-12 mt-3">
+          <div class="cards_container" *ngFor="let item of objectArray; let i = index">
+            <div class="card_item">
+              <div class="card_column">
+                <h1 *ngIf="!loadingState &&templateList?.length == 0">No Templates Found</h1>
+                <!-- class="profile_details" -->
+                <div id="mycardFrame{{ i }}"></div>
+                <div *ngIf="item && item.template && item.template.html" class="cards_status">
+                  <div *ngIf="permissionObject?.includes(permissionCode?.updateCard)" class="status">
+                    <div class="status_button" *ngIf="item?.activeTemplateId">
+                      <!-- <button class="btn_share" (click)="shareDialog()">
+                        <img src="assets/images/cards/icon_share.svg" />
+                      </button> -->
+                      <button [routerLink]="['/cards/edit',item?.id]">
+                        <mat-icon>edit</mat-icon> Edit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h1 *ngIf="!selectedBUCode">Select Business Unit</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<loading *ngIf="loadingState"></loading>

@@ -1,0 +1,99 @@
+<div class="mainpage">
+  <div class="row centerDiv">
+    <div class="col-10">
+      <p>{{ userData?.data?.message }}
+        <br>
+        <br>
+        Thank you!
+      </p>
+
+
+      <form [formGroup]="enquiryForm" (ngSubmit)="submitForm()" class="enquiry">
+        <div class="row enquiry_inner">
+          <div class="textfileds">
+            <div class="form-group w-45 input-fildcl">
+              <label for="name" class="control-label">First Name</label>
+              <div class="f_name">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input onlyCharacters [formControl]="enquiryForm.controls['firstName']" class="name" matInput placeholder="Enter First Name" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Last Name</label>
+              <div class="l_name">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input onlyCharacters [formControl]="enquiryForm.controls['lastName']" class="emailfield" matInput
+                    placeholder="Enter Last Name" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="textfileds">
+            <div class="form-group w-45 input-fildcl">
+              <label for="name" class="control-label">Email Address</label>
+              <div class="Email_id_name">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input [formControl]="enquiryForm.controls['emailId']" class="name" matInput placeholder="Enter Email Id" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Phone</label>
+              <div class="Phone_no">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input [formControl]="enquiryForm.controls['mobileNo']" onlyNumbers class="emailfield" matInput
+                    placeholder="Enter Phone Number" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-12">
+            <label for="">Address</label>
+            <div class="addressfield">
+              <mat-form-field appearance="outline" class="w-100">
+                <textarea matInput class="textarea" [formControl]="enquiryForm.controls['enquiry']"
+                rows="3"  placeholder="Enter your Address here..."> </textarea>
+              </mat-form-field>
+            </div>
+          </div> -->
+          <div class="col-12">
+            <label for="">Enquiry</label>
+            <div class="enquiryfield">
+              <mat-form-field appearance="outline" class="w-100">
+                <textarea matInput class="textarea" [formControl]="enquiryForm.controls['enquiryData']"
+                rows="5"  placeholder="Type your message here..."> </textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="text_field captcha_style">
+            <label for="Captcha">{{'LOGIN.CAPTCHA'|translate}}</label>
+          </div>
+          <ng-container>
+            <div class="text_field">
+              <span class="captcha">{{captchaValue}}</span>
+              <span class="captchabutton m-3" (click)="createCaptcha()">
+                <mat-icon>cached</mat-icon>
+              </span>
+            </div>
+            <div class="captcha_text">
+              <mat-form-field appearance="outline" class="w-100 h-60">
+                <input type="text" (input)="validCaptcha()" [formControl]="enquiryForm.controls['reCaptcha']" matInput
+                 class="captcha_input" placeholder="{{'LOGIN.CAPTCHAPLACEHOLDER'|translate}}">
+              </mat-form-field>
+            </div>
+          </ng-container>
+          </div>
+        <div class="buttons">
+          <button type="submit" class="btn" mat-raised-button color="primary">
+            Send Enquiry
+          </button>
+        </div>
+      </form>
+  
+    </div>
+  </div>
+</div>
+
+<fullscreen-loading ></fullscreen-loading>
+<loading *ngIf="loadingState"></loading>

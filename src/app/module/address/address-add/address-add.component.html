@@ -1,0 +1,100 @@
+<section class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="row 0">
+        <div class="col add-brdcmb">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+              <li class="breadcrumb-item active" routerLink="/address" aria-current="page">Address</li>
+              <li class="breadcrumb-item active" aria-current="page"> {{isEditing ? 'Update':'Add'}} Address</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div class="main-div padding-x">
+        <div class="d-flex justify-content-between">
+          <h3 class="form-hadding">{{isEditing ? 'Update':'Add'}} Address</h3>
+        </div>
+        <form [formGroup]="addForm" (ngSubmit)="submitForm()" class="pt-5 row justify-content-between">
+          <div class="form-group w-45  input-fildcl">
+            <label for="lname" class="control-label">Address Name <em>*</em></label>
+            <div class="inpu-t">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['addressName']" matInput placeholder="Ex : Primary">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Street</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput (keypress)="validateAddress($event)" [formControl]="addForm.controls['street']"
+                  placeholder=" Ex : Street">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Building</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput (keypress)="validateAddress($event)" [formControl]="addForm.controls['building']"
+                  placeholder=" Ex : Building">
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Locality</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput [formControl]="addForm.controls['locality']" placeholder="Ex : Locality">
+              </mat-form-field>
+            </div>
+          </div> -->
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label"> Postal Code <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput number [formControl]="addForm.controls['postalcode']" placeholder=" Ex : 123456">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">City</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput onlyCharacters [formControl]="addForm.controls['city']"
+                  placeholder=" Ex : City">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">State</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput onlyCharacters [formControl]="addForm.controls['state']"
+                  placeholder=" Ex : State">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Country <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput onlyCharacters [formControl]="addForm.controls['country']"
+                  placeholder=" Ex : india">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end margin-y">
+            <button type="button" mat-raised-button  routerBack>
+              Cancel
+            </button>
+            <button type="submit" mat-raised-button color="primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- <fullscreen-loading *ngIf="showLoader"></fullscreen-loading> -->

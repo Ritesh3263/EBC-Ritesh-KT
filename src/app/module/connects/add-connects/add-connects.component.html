@@ -1,0 +1,112 @@
+<section class="side_container">
+  <div class="container-fluid">
+
+    <div class="main-page">
+      <div class="row 0">
+        <div class="col add-brdcmb">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Connects</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Add Connects</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+  
+  
+          <div class="main-div padding-x">
+  
+            
+            <div class="d-flex justify-content-between">
+              <h3 class="form-hadding">Add Connects</h3>
+            </div>
+  
+  
+            <form action="#" class="pt-5 row justify-content-between">
+  
+  
+              <div class="form-group w-45  input-fildcl">
+                <label for="lname" class="control-label">First Name</label>
+                <div class="inpu-t">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Ex : John.snow</mat-label>
+                    <input [formControl]="addForm.controls['role_name']" matInput placeholder="Ex : John.snow">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="form-group w-45  input-fildcl">
+                <label for="lname" class="control-label">Last name</label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Ex : D’souza</mat-label>
+                    <input [formControl]="addForm.controls['role_name']" matInput placeholder="Ex : D’souza">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="form-group w-45  input-fildcl">
+                <label for="lname" class="control-label">Email</label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Ex : John.snow@gmail.com</mat-label>
+                    <input [formControl]="addForm.controls['email']" matInput placeholder="Ex : John.snow@gmail.com">
+                  </mat-form-field>
+                </div>
+              </div>
+  
+              <div class="form-group w-45 input-fildcl">
+                <label for="lname" class="control-label">Phone Number</label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Ex : 9834567789</mat-label>
+                    <input  [formControl]="addForm.controls['role_name']" matInput placeholder="Ex : 9834567789">
+                  </mat-form-field>
+                </div>
+              </div>
+  
+  
+
+              <div class="form-group w-45 input-fildcl">
+                <label for="lname" class="control-label">Business Unit</label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Select</mat-label>
+                    <mat-select [(value)]="selected">
+                      <mat-option>None</mat-option>
+                      <mat-option value="option1">Select</mat-option>
+                      <mat-option value="option2">Select</mat-option>
+                      <mat-option value="option3">Select</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+
+              <div class="form-group w-45 input-fildcl">
+                <label for="lname" class="control-label">Desgination</label>
+                <div class="">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Ex : Software Developer</mat-label>
+                    <input matInput placeholder="Ex : Software Developer">
+                  </mat-form-field>
+                </div>
+              </div>
+  
+              
+  
+              <div class="d-flex justify-content-end margin-y">
+                <button type="button" mat-raised-button  routerBack>
+                  Cancel
+                </button>
+                  <button mat-raised-button color="primary">Save</button>
+  
+              </div>
+            </form>
+          </div>
+  
+    </div>
+   
+  </div>
+</section>

@@ -1,0 +1,214 @@
+<mat-card class="side-navbar active-nav" id="sidebar" [class.full]="sidenavshow" [class.half]="!sidenavshow">
+  <div class="nav-logo" [class.w-0]="!sidenavshow">
+    <img *ngIf="permissionObject?.includes(permissionCode?.dashboard)" src="../../../assets/images/login/nec.logo.png"
+      routerLink="/dashboard" />
+    <img *ngIf="!permissionObject?.includes(permissionCode?.dashboard)"
+      src="../../../assets/images/login/nec.logo.png" />
+
+  </div>
+
+  <div class="nav-logo" [class.w-0]="sidenavshow">
+    <img *ngIf="permissionObject?.includes(permissionCode?.dashboard)" src="../../../assets/images/login/nec.logo.png"
+      routerLink="/dashboard" />
+    <img *ngIf="!permissionObject?.includes(permissionCode?.dashboard)"
+      src="../../../assets/images/login/nec.logo.png" />
+  </div>
+
+  <div class="float-right">
+    <button class="btn_toggle mob" (click)="ShowsidebarMob()">
+      <!-- <mat-icon [class.icon_rotate]="!sidenavshow">keyboard_double_arrow_left</mat-icon> -->
+      <img [class.icon_rotate]="!sidenavshow" src="../../../assets/images/close-btn.png">
+    </button>
+    <button class="btn_toggle" (click)="toggleShowsidebar()">
+      <!-- <mat-icon [class.icon_rotate]="!sidenavshow">keyboard_double_arrow_left</mat-icon> -->
+      <img [class.icon_rotate]="!sidenavshow" src="../../../assets/images/close-btn.png">
+    </button>
+  </div>
+
+  <div class="ul_wrap">
+    <ul class="">
+      <!-- *ngIf="this.currentUser && !(['lawrence_chan@nec.com','dooi@nec.com.sg'].includes(this.currentUser?.emailId))" -->
+      <ng-container>
+        <div class="nav-link" *ngIf="permissionObject?.includes(permissionCode?.dashboard)">
+          <li routerLink="/dashboard" routerLinkActive="active" (click)="ShowsidebarMob()" class="width-fit">
+            <mat-icon>dashboard </mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDEBAR.DASHBOARD'|translate}}</span>
+          </li>
+        </div>
+        <div class="nav-link"
+          *ngIf="permissionObject?.includes(permissionCode?.user) || permissionObject?.includes(permissionCode?.role)">
+          <li (click)="toggleShow()" routerLinkActive="active">
+            <mat-icon>person</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDEBAR.ADMIN'|translate}}</span>
+            <mat-icon *ngIf="!isShown">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="isShown">keyboard_arrow_up</mat-icon>
+          </li>
+        </div>
+        <div *ngIf="isShown && permissionObject?.includes(permissionCode?.user) && currentUser?.role !== 'Super Admin'" class="nav-link sublink">
+          <li routerLink="/user" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <div class="dot"></div>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDEBAR.USER'|translate}}</span>
+          </li>
+        </div>
+        <div *ngIf="isShown && permissionObject?.includes(permissionCode?.role)" class="nav-link sublink">
+          <li routerLink="/role" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <div class="dot"></div>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDEBAR.ROLE'|translate}}</span>
+          </li>
+        </div>
+        <div *ngIf="isShown && permissionObject?.includes(permissionCode?.address)" class="nav-link sublink">
+          <li routerLink="/address" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <div class="dot"></div>
+            <span class="mx-2" [class.none]="!sidenavshow">Address</span>
+          </li>
+        </div>
+        <div class="nav-link" *ngIf="permissionObject?.includes(permissionCode?.distributor)">
+          <li routerLink="/distributor" routerLinkActive="active" (click)="ShowsidebarMob()">
+            <mat-icon> local_shipping</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">Distributor</span>
+          </li>
+        </div>
+        <div class="nav-link" *ngIf="permissionObject?.includes(permissionCode?.reseller)">
+          <li routerLink="/reseller" routerLinkActive="active" (click)="ShowsidebarMob()">
+            <mat-icon> store_mall_directory</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">Reseller</span>
+          </li>
+        </div>
+        <div class="nav-link" *ngIf="permissionObject?.includes(permissionCode?.tenant)">
+          <li routerLink="/tenant" routerLinkActive="active" (click)="ShowsidebarMob()">
+            <mat-icon> local_mall</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDEBAR.TENANT'|translate}}</span>
+          </li>
+        </div>
+        <div class="nav-link" *ngIf="permissionObject?.includes(permissionCode?.businessUnit)">
+          <li routerLink="/business-unit" routerLinkActive="active" (click)="ShowsidebarMob()">
+            <mat-icon>business_center</mat-icon>
+
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDEBAR.BUSINESSUNIT'|translate}}</span>
+          </li>
+        </div>
+        <!-- <div class="nav-link">
+        <li routerLink="/employees" routerLinkActive="active">
+          <mat-icon>people</mat-icon>
+          <span class="mx-2" [class.none]="!sidenavshow">{{'SIDEBAR.EMPLOYEES'|translate}}</span>
+        </li>
+      </div> -->
+        <div class="nav-link" *ngIf="permissionObject?.includes(permissionCode?.cards)">
+          <li routerLink="/cards" routerLinkActive="active" (click)="ShowsidebarMob()">
+            <mat-icon> tab </mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">{{'SIDEBAR.CARDS'|translate}}</span>
+          </li>
+        </div>
+      </ng-container>
+      <div class="nav-link" *ngIf="permissionObject?.includes(permissionCode?.myCards)">
+        <li routerLink="/my-cards" routerLinkActive="active" (click)="ShowsidebarMob()">
+          <mat-icon> layers </mat-icon>
+          <span class="mx-2" [class.none]="!sidenavshow">{{'SIDEBAR.MYCARDS'|translate}}</span>
+        </li>
+      </div>
+
+      <div
+        *ngIf="permissionObject?.includes(permissionCode?.myConnects) || permissionObject?.includes(permissionCode?.otherConnects)"
+        class="nav-link">
+        <li (click)="isShown2 = !isShown2" routerLinkActive="active">
+          <mat-icon> swap_horiz </mat-icon>
+          <span class="mx-2" [class.none]="!sidenavshow">{{'SIDEBAR.CONNECTS'|translate}}</span>
+          <mat-icon *ngIf="!isShown2">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="isShown2">keyboard_arrow_up</mat-icon>
+        </li>
+      </div>
+
+      <div *ngIf="isShown2 && permissionObject?.includes(permissionCode?.myConnects)" class="nav-link sublink">
+        <li routerLink="/connects/my" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+          <div class="dot"></div>
+          <span class="mx-2" [class.none]="!sidenavshow">My View</span>
+        </li>
+      </div>
+
+      <div *ngIf="isShown2 && permissionObject?.includes(permissionCode?.otherConnects)" class="nav-link sublink">
+        <li routerLink="/connects/other" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+          <div class="dot"></div>
+          <span class="mx-2" [class.none]="!sidenavshow">Others View</span>
+        </li>
+      </div>
+      <div class="nav-link" *ngIf="currentUser?.isManager && permissionObject?.includes(permissionCode?.approvalRequests) && permissionObject?.includes(permissionCode?.approvalLogs)">
+        <li (click)="isShown4 = !isShown4"  routerLinkActive="active" class="subnav_link">
+          <mat-icon> check_circle_outline </mat-icon>
+          <span class="mx-2">Approval</span>
+          <mat-icon *ngIf="!isShown4">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="isShown4">keyboard_arrow_up</mat-icon>
+        </li>
+      </div>
+
+    <div *ngIf="isShown4 && currentUser?.isManager && permissionObject?.includes(permissionCode?.approvalRequests)" class="nav-link sublink">
+      <li routerLink="/approval/approval-process" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+        <div class="dot"></div>
+        <span class="mx-2" [class.none]="!sidenavshow">Requests</span>
+      </li>
+    </div>
+
+    <div *ngIf="isShown4 && currentUser?.isManager && permissionObject?.includes(permissionCode?.approvalLogs)" class="nav-link sublink">
+      <li routerLink="/approval/approval" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+        <div class="dot"></div>
+        <span class="mx-2" [class.none]="!sidenavshow">Logs</span>
+      </li>
+    </div>
+    <div class="nav-link" *ngIf="permissionObject?.includes(permissionCode?.requestLogs) && currentUser.approverId">
+      <li routerLink="/approval/user-log" routerLinkActive="active" (click)="ShowsidebarMob()">
+        <mat-icon> description </mat-icon>
+        <span class="mx-2" [class.none]="!sidenavshow">Request Logs</span>
+      </li>
+    </div>
+
+
+      <!-- report -->
+      <ng-container *ngIf=" permissionObject?.includes(permissionCode?.report) || (currentUser?.userType == 'Bu Admin' || currentUser?.userType == 'Tenant Admin')">
+        <div class="nav-link">
+          <li (click)="isShown3 =!isShown3" routerLinkActive="active">
+            <mat-icon>person</mat-icon>
+            <span class="mx-2" [class.none]="!sidenavshow">Reports</span>
+            <mat-icon *ngIf="!isShown3">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="isShown3">keyboard_arrow_up</mat-icon>
+          </li>
+        </div>
+        <div *ngIf="isShown3 && permissionObject?.includes(permissionCode?.report)" class=" nav-link sublink">
+          <li routerLink="/report/inventory" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <div class="dot"></div>
+            <span class="mx-2" [class.none]="!sidenavshow">Inventory</span>
+          </li>
+        </div>
+        <div *ngIf="isShown3 && permissionObject?.includes(permissionCode?.report)" class="nav-link sublink">
+          <li routerLink="/report/activation" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <div class="dot"></div>
+            <span class="mx-2" [class.none]="!sidenavshow">Activation</span>
+          </li>
+        </div>
+        <div *ngIf="isShown3 && permissionObject?.includes(permissionCode?.report)" class="nav-link sublink">
+          <li routerLink="/report/expiry" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <div class="dot"></div>
+            <span class="mx-2" [class.none]="!sidenavshow">Expiry</span>
+          </li>
+        </div>
+        <div *ngIf="isShown3 && permissionObject?.includes(permissionCode?.businessCardUsage)" class="nav-link sublink">
+          <li routerLink="/report/card-usage" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <div class="dot"></div>
+            <span class="mx-2" [class.none]="!sidenavshow">Business Card Usage</span>
+          </li>
+        </div>
+        <div *ngIf="isShown3 && permissionObject?.includes(permissionCode?.licenseUsage)" class="nav-link sublink">
+          <li routerLink="/report/license-usage" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <div class="dot"></div>
+            <span class="mx-2" [class.none]="!sidenavshow">Licence Usage</span>
+          </li>
+        </div>
+        <div *ngIf="isShown3 && permissionObject?.includes(permissionCode?.userLogin)" class="nav-link sublink">
+          <li routerLink="/report/user-login-report" routerLinkActive="active" class="subnav_link" (click)="ShowsidebarMob()">
+            <div class="dot"></div>
+            <span class="mx-2" [class.none]="!sidenavshow">User LogIn</span>
+          </li>
+        </div>
+      </ng-container>
+
+    </ul>
+  </div>
+</mat-card>

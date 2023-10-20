@@ -1,0 +1,5 @@
+.ul_list{
+  @media (max-width:576px){
+    padding-right: 40px;
+  }
+}

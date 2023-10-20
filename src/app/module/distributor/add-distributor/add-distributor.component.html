@@ -1,0 +1,224 @@
+<section class="side_container">
+  <div class="container-fluid">
+
+    <div class="main-page">
+      <div class="row 0">
+        <div class="col add-brdcmb">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+              <li class="breadcrumb-item"><a routerLink="/distributor">Distributor</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{{pageTitle}}</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div *ngIf="activeForm==1" class="main-div padding-x main-sec">
+        <div class="d-flex justify-content-center">
+          <button type="button" mat-mini-fab class="orange" aria-label="">01</button>
+          <p class="dashed-line"></p>
+          <button type="button" (click)="fromChange()" mat-mini-fab class="orange-light" aria-label="">02</button>
+        </div>
+        <div class="d-flex justify-content-between form_heading">
+          <h3 class="form-hadding">{{pageTitle}}</h3>
+        </div>
+        <form [formGroup]="firstForm" (ngSubmit)="fromChange()" class="pt-5 row justify-content-between">
+          <div class="form-group w-45  input-fildcl">
+            <label for="lname" class="control-label">First Name</label>
+            <div class="inpu-t">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="firstForm.controls['firstName']" onlyCharacters matInput
+                  placeholder="Ex : John.snow" maxlength="48">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45  input-fildcl">
+            <label for="lname" class="control-label">Last Name <em>*</em></label>
+            <div class="inpu-t">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="firstForm.controls['lastName']" onlyCharacters matInput
+                  placeholder="Ex : John.snow" maxlength="48">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45  input-fildcl">
+            <label for="lname" class="control-label">Country <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="firstForm.controls['country']" onlyCharacters matInput placeholder="Ex : India"
+                  maxlength="48">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-group w-45  input-fildcl">
+            <label for="lname" class="control-label">Email<em>*</em></label>
+            <div [ngClass]="{'disable': isEditing}">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [readonly]="" [formControl]="firstForm.controls['emailId']" (change)="verifyEmail()" matInput
+                  placeholder="Ex : John.snow@gmail.com" (change)="verifyEmail()">
+                <div
+                  *ngIf="(firstForm.get('emailId').invalid && firstForm.get('emailId').touched) || firstForm.get('emailId').dirty">
+                  <small class="text-danger" *ngIf="firstForm.get('emailId').errors?.required">Email address is
+                    required</small>
+                  <small class="text-danger" *ngIf="firstForm.get('emailId').errors?.pattern">Email address is
+                    invalid</small>
+                </div>
+              </mat-form-field>
+              <mat-error *ngIf="formErrors?.emailId">{{formErrors?.emailId}}</mat-error>
+            </div>
+          </div>
+
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Contact Number<em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input onlyNumbers [formControl]="firstForm.controls['primaryContact']" matInput
+                  placeholder="Ex : 9834567789" minlength="8" maxlength="20">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end margin-y">
+            <button type="submit" mat-raised-button color="primary"> Next </button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="activeForm==2" class="main-div main-sec main_container">
+        <div class="d-flex justify-content-center">
+          <button type="button" (click)="activeForm=1" mat-mini-fab class="orange-light" aria-label="">01</button>
+          <p class="dashed-line"></p>
+          <button type="button" mat-mini-fab class="orange" aria-label="">02</button>
+        </div>
+        <div class="d-flex justify-content-between form_heading">
+          <h3 class="form-hadding">{{isEditing?'Update':'Add'}} License</h3>
+        </div>
+        <div class="top_header">
+          <div class="row">
+            <div *ngIf="standard" class="col-md-4">
+              <div class="header_col standard">
+                <div class="card_sec">
+                  <div class="card_left">
+                    <h5>Standard </h5>
+                    <p>{{standard?.utilizedCount}}<span style="color: #00000070;">/</span>{{standard?.totalCount}}</p>
+                    <br>
+                    <span class="u-a">Used </span>/<span class="u-a"> Total</span>
+                  </div>
+                  <div class="card_right">
+                    <img src="./assets/images/cards/license_standard.png" class="img-fluid" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="gold" class="col-md-4">
+              <div class="header_col gold">
+                <div class="card_sec">
+                  <div class="card_left">
+                    <h5>Gold </h5>
+                    <p>{{gold?.utilizedCount}}<span style="color: #00000070;">/</span>{{gold?.totalCount}}</p>
+                    <br>
+                    <span class="u-a">Used </span>/<span class="u-a"> Total</span>
+                  </div>
+                  <div class="card_right">
+                    <img src="./assets/images/cards/license_gold.png" class="img-fluid" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="platinum" class="col-md-4">
+              <div class="header_col patinum">
+                <div class="card_sec">
+                  <div class="card_left">
+                    <h5>Platinum </h5>
+                    <p>{{platinum?.utilizedCount}}<span style="color: #00000070;">/</span>{{platinum?.totalCount}}</p>
+                    <br>
+                    <span class="u-a">Used </span>/<span class="u-a"> Total</span>
+
+                  </div>
+                  <div class="card_right">
+                    <img src="./assets/images/cards/license_silver.png" class="img-fluid" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+        <form [formGroup]="licenseForm" (ngSubmit)="addLicense()" class="pt-3 step_2">
+          <div class="input_column">
+            <div class="form-group input-fildcl">
+              <label for="lname" class="control-label">Add License</label>
+              <div class="inpu-t">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-select [formControl]="licenseForm.controls['licenseType']" (selectionChange)="onLicenseChange()"
+                    placeholder="Select Type">
+                    <mat-option *ngFor="let license of licenseListArray" [value]="license?.name">
+                      {{license?.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group input-fildcl w-auto">
+              <label for="lname" class="control-label">Count</label>
+              <div class="inpu-t">
+                <!-- <mat-form-field appearance="outline" class="w-100"> -->
+                <div class="input-group inc_dec">
+                  <button (click)="countUpdate('-')" type="button" class="dec">&nbsp; - &nbsp;</button>
+                  <input class="form-control" [formControl]="licenseForm.controls['count']" type="number" autofocus
+                    inputmode="numeric" min="1" matInput
+                    [ngClass]="{'error-border': licenseForm.controls['count'].invalid && (licenseForm.controls['count'].dirty || licenseForm.controls['count'].touched)}"
+                    placeholder="Ex : 1" />
+                  <button (click)="countUpdate('+')" type="button" class="inc">&nbsp; + &nbsp;</button>
+                </div>
+                <!-- </mat-form-field> -->
+              </div>
+            </div>
+          </div>
+          <div class="btn_add">
+            <button mat-raised-button color="primary" class="mr-5"><a>+ Add</a></button>
+          </div>
+        </form>
+        <div class="admin-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">License Type</th>
+                <th scope="col">Seater</th>
+                <!-- <th scope="col">Valid from</th>
+                <th scope="col">Valid to</th>
+                <th scope="col">No of Months</th> -->
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let element of objectArray; let i=index">
+                <td>{{element?.licenseType}}</td>
+                <td>{{element?.count}}</td>
+                <!-- <td>{{element?.validFrom |date:'MMM, y'}}</td>
+                <td>{{element?.validTo |date:'MMM, y'}}</td>
+                <td> {{element?.month}}</td> -->
+                <td>
+                  <button *ngIf="!element?.id" type="button" (click)="onDelete(i)" class="btn btn-red text-danger">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="objectArray.length==0" class="mat-row no_data">
+                <td class="mat-cell" colspan="6">No data found</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mt-3">
+          </div>
+        </div>
+        <div class="d-flex justify-content-end margin-y">
+          <button (click)="submitForm()" type="submit" mat-raised-button
+            color="primary">{{isEditing?'Update':'Add'}}</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,37 @@
+{
+  "name": "ngx-vcard",
+  "version": "0.0.1",
+  "description": "Generate an RFC compliant vCard and download it.",
+  "keywords": [
+    "angular",
+    "vCard"
+  ],
+  "homepage": "https://github.com/DanielHabenicht/ngx-vcard",
+  "bugs": {
+    "url": "https://github.com/DanielHabenicht/ngx-vcard/issues"
+  },
+  "author": {
+    "name": "Daniel Habenicht",
+    "email": "daniel-habenicht@aquiver.de",
+    "url": "https://www.aquiver.de"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanielHabenicht/ngx-vcard"
+  },
+  "dependencies": {
+    "tslib": "2.3.1"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=5.x <13.0.0",
+    "@angular/core": ">=5.x <13.0.0"
+  },
+  "main": "bundles/ngx-vcard.umd.js",
+  "module": "fesm2015/ngx-vcard.js",
+  "es2015": "fesm2015/ngx-vcard.js",
+  "esm2015": "esm2015/ngx-vcard.js",
+  "fesm2015": "fesm2015/ngx-vcard.js",
+  "typings": "ngx-vcard.d.ts",
+  "sideEffects": false
+}

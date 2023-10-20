@@ -1,0 +1,94 @@
+<div class="delet-popup text-center">
+
+    <ng-container *ngIf="(receivedData?.status|lowercase) == 'error'">
+      <img src="assets/images/errorIcon.png">
+      <h3>{{receivedData?.message}}</h3>
+      <div class="text-center">
+        <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Ok</button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="userListData?.status == 'Ok' &&  data?.callback == 'deleteRecord'">
+      <img src="assets/images/successIcon.png">
+      <h3>{{userListData?.message}}</h3>
+      <div class="d-flex">
+        <div class="text-center">
+          <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Ok</button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="userListData?.status == 'Error' &&  data?.callback == 'deleteRecord'">
+      <img src="assets/images/errorIcon.png">
+      <h3>{{userListData?.message}}</h3>
+      <div class="d-flex">
+        <div class="text-center">
+          <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Ok</button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="userListData?.status == 'Ok' && data?.callback == 'bulkUploadPartialExisting'">
+      <img src="assets/images/successIcon.png">
+      <h3>'{{userListData?.addedCount}}' new records uploaded. '{{userListData?.existingUserCount}}' records found duplicate.</h3>
+      <div class="d-flex">
+        <div class="text-center">
+          <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Ok</button>
+        </div>
+        <div class="text-center">
+          <button class="blue-btn w-10" (click)="download()" mat-button mat-dialog-close><mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color icon-dwnld" aria-hidden="true" data-mat-icon-type="font">download</mat-icon></button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="userListData?.status == 'Ok' && data?.callback == 'bulkUploadExisting'">
+      <img src="assets/images/successIcon.png">
+      <h3>Unable to upload, Users already exist</h3>
+      <div class="d-flex">
+        <div class="text-center">
+          <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Ok</button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="userListData?.status == 'Ok' && data?.callback == 'bulkUploadAll'">
+      <img src="assets/images/successIcon.png">
+      <h3>'{{userListData?.addedCount}}' new records uploaded successfully.</h3>
+      <div class="d-flex">
+        <div class="text-center">
+          <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Ok</button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="addressDelete?.status == 'Ok'">
+      <img src="assets/images/successIcon.png">
+      <h3>{{addressDelete?.message}}</h3>
+      <div class="text-center">
+        <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Ok</button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="userListData?.status == 'Ok' && data.callback == 'bulkUploadError'">
+      <img src="assets/images/successIcon.png">
+      <h3>{{userListData?.message}}</h3>
+      <div class="text-center">
+        <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Ok</button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="userListData?.status == 'Error' && data.callback == 'bulkUploadError'">
+      <img src="assets/images/successIcon.png">
+      <h3>{{userListData?.message}}</h3>
+      <div class="text-center">
+        <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Ok</button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="userListData?.status == 'Ok' && data.callback == 'bulkUploadNoData'">
+      <img src="assets/images/successIcon.png">
+      <h3>No Records found</h3>
+      <div class="text-center">
+        <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Ok</button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="buDelete?.status == 'Ok'">
+      <img src="assets/images/successIcon.png">
+      <h3>Business unit deleted successfully</h3>
+      <div class="text-center">
+        <button class="blue-line-btn" (click)="close()" mat-button mat-dialog-close>Ok</button>
+      </div>
+    </ng-container>
+  </div>

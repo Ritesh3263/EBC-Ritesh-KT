@@ -1,0 +1,6 @@
+export * from './lib/ngx-vcard.module';
+export * from './lib/ngx-vcard.formatter';
+export * from './lib/download-vcard.directive';
+export * from './lib/types/vCard';
+export * from './lib/types/vCardEncoding';
+export * from './lib/types/parameter/BasicPropertyParameters.type';

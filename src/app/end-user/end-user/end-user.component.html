@@ -1,0 +1,31 @@
+<div class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="cards_container">
+        <div class="d-flex justify-content-center">
+          <h2 class="form-hadding">Business Card</h2>
+        </div>
+        <div class="card_container">
+          <div class="card_item">
+            <div id="endUsercardFrame"></div>
+            <div class="btn_bottom">
+              <div class="btn_download">
+                <button style="display: none;" id="carddown" vcdDownloadVCard
+                  [generateVCardFunction]="generateVCardOnTheFly">
+                </button>
+              </div>
+            </div>
+          </div>
+          <h1 *ngIf="!isLoading &&!objectDetails?.html" class="text-muted" style="text-align: center;">
+            The employee of this card is no longer a part of this organization.<br>
+            Please contact the support team for further assistance
+          </h1>
+        </div>
+
+        <!-- <div class="card_container" *ngIf="isMessage">
+
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

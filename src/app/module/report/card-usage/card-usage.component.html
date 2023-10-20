@@ -1,0 +1,92 @@
+<div class="side_container">
+    <div class="container-fluid">
+      <div class="main-page">
+        <div class="row m-0 mt-3">
+          <div class="col-md-3 admin-brdcmb mt-0">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a routerLink="/dashboard">Reports</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Business Card Usage</ol>
+            </nav>
+          </div>
+          
+
+        </div>
+        <div class="row m-0">
+          <div class="row m-0 buttons">
+            <div class="w-30 d-flex">
+              <div class="form-group w-45 input-fildcl d-flex">
+                <div class="form_field">
+                    <mat-form-field appearance="outline">
+                        <mat-select [(ngModel)]="selectedBU" (selectionChange)="getObjects()" multiple placeholder="Select Business Unit">
+                              <mat-option *ngFor="let bu of buList" [value]="bu">
+                                {{bu}}
+                              </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+                <button (click)="reset()" color="primary" class="mr-5 reset-btn mat-raised-button">
+                    <i class="la la-refresh mr-2"></i>
+                </button>
+                <div class="div-top-text">
+                  <h2>Total: {{totalView}}</h2>
+                </div>
+              </div>
+              <div class="adbtn col">
+                <button color="primary" class="mr-5 mat-raised-button" (click)="onDownload()">
+                  <a>
+                    <mat-icon>file_download</mat-icon>
+                    Export
+                  </a>
+                </button>
+              </div>
+              
+            </div>
+          </div>
+          <div class="col-lg-12 mt-3">
+            <div class="main-div">
+              <div class="admin-table">
+                <table class="table table-width">
+                  <thead>
+                    <tr>
+                        <th scope="col" *ngFor="let col of filterColumns">{{col}} <img *ngIf="col != 'BU'" (click)="sortData(col)"
+                            src="assets/images/filter.svg"></th>
+                      </tr>
+                  </thead>
+                  
+                  <tbody *ngIf="objectArray.length > 0">
+                    <ng-container *ngIf="currentUser?.userType == 'BU Admin'">
+                        <tr *ngFor="let item of objectArray">
+                            <td> {{item._id}} </td>
+                            <td> {{item?.count}} </td>
+                          </tr>
+                    </ng-container>
+                    <ng-container *ngIf="currentUser?.userType == 'Tenant Admin'">
+                        <tr *ngFor="let item of objectArray">
+                            <td> {{item._id}} </td>
+                            <td> {{item?.count}} </td>
+                            <td *ngIf="item?.bu.length > 0">{{item?.bu.join(',')}}</td>
+                            <td *ngIf="item?.bu.length == 0"> No BU Assigned</td>
+                          </tr>
+                    </ng-container>
+                  </tbody>
+                  <tbody *ngIf="objectArray.length == 0">
+                    <tr><td colspan="3"> No Records Found </td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="mt-3">
+                <pagination [paginationList]="pagination" [selectedPageLimit]="currentPageLimit"
+                  [currentPage]="currentPage" (onPageChange)="getPage($event)">
+                </pagination>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,59 @@
+<div class="overlay"></div>
+<div class="sideNav">
+  <app-aside-nav></app-aside-nav>
+</div>
+<div class="side-container">
+  <div class="navbar navbar-expand-md navbar-dark">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="ShowsidebarMob()" class="hamburger_menu">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+      <div *ngIf="iswarning" class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+        <strong> {{WarningMessage}} </strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <div class="progressbar_msg" *ngIf="showLoader">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" style="width: 30%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{30}}%</div>
+        </div>
+      </div>
+      <ul class="navbar-nav d-flex nav-right1">
+        <!-- <li class="nav-item">
+          <img src="assets/images/{{activeLang}}.svg" (selectionChange)="onLanguageChange()" /> -->
+
+        <!-- <mat-form-field appearance="outline">
+            <mat-select disableRipple [(ngModel)]="activeLang" (selectionChange)="onLanguageChange()">
+              <mat-option *ngFor="let option of languageList" [value]="option?.code">
+                <img src="assets/images/{{option?.code}}.svg" />
+                {{ option?.value }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+        <!-- </li> -->
+        <!-- <li class="nav-item dropdown notif-bell">
+          <a class="nav-link text-primary dropdown-toggle pt-3 btn-notification" title="Notification" href="#"
+            id="notification" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <mat-icon matBadge="15" matBadgeSize="medium" matBadgePosition="after" matBadgeColor="accent"
+              matBadgeOverlap="true">notifications</mat-icon>
+          </a>
+          <app-notifications class="dropdown-menu drop-menu-right" aria-labelledby="notification">
+          </app-notifications>
+        </li> -->
+        <li class="nav-item dropdown user-prof-box">
+          <button role="button" type="button" class="profile_drop" id="profileDrop" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <span class="rounded-circle">
+              <img [src]="currentUser?.profilePicture ? currentUser?.profilePicture : 'https://ebcblob.blob.core.windows.net/ebc/DefaultUser.png'"
+                alt="" />
+            </span>
+          </button>
+          <!-- Profile Dropdown -->
+          <app-profile-drop class="dropdown-menu drop-menu-right" aria-labelledby="profileDrop">
+          </app-profile-drop>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

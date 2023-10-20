@@ -1,0 +1,300 @@
+<section class="side_container">
+  <div class="container-fluid">
+    <div class="main-page">
+      <div class="row 0">
+        <div class="col add-brdcmb">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a routerLink="/dashboard">Home</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                {{ pageTitle }}
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div class="main-div padding-x">
+        <div class="d-flex justify-content-between">
+          <h3 class="form-hadding">{{ pageTitle }}</h3>
+        </div>
+        <form [formGroup]="addForm" (ngSubmit)="submitForm()" class="form_field row justify-content-between">
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Company name <em>*</em></label>
+            <div class="inpu-t">
+              <mat-form-field appearance="outline" class="w-100">
+                <!-- <mat-label>Ex : Microsoft</mat-label> -->
+                <input [formControl]="addForm.controls['companyName']" matInput placeholder="Ex : Infosys" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Code <em>*</em></label>
+            <div class="inpu-t1">
+              <mat-form-field appearance="outline" class="w-100">
+                <ng-container *ngIf="isEditing">
+                  <input disabled value="{{addForm.controls['code'].value}}" matInput placeholder="Ex : code" />
+                </ng-container>
+                <ng-container *ngIf="!isEditing">
+                  <input [readonly]="isEditing" (input)="onCheckCodeExist()" [formControl]="addForm.controls['code']"
+                    matInput placeholder="Ex : code" />
+                </ng-container>
+              </mat-form-field>
+              <mat-error *ngIf="formErrors?.code">{{formErrors?.code}}</mat-error>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Primary Contact <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <!-- <mat-label>Ex : 098645322</mat-label> -->
+                <input onlyNumbers [formControl]="addForm.controls['primaryContact']" matInput placeholder="Ex : 098645322" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Primary Email <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <!-- <mat-label>Ex : abc@gmail.com</mat-label> -->
+                <input [formControl]="addForm.controls['primaryEmailId']" matInput placeholder="Ex : abc@gmail.com" [class.is-invalid]="addForm.get('primaryEmailId').invalid && addForm.get('primaryEmailId').touched"/>
+                <div
+                  *ngIf="(addForm.get('primaryEmailId').invalid && addForm.get('primaryEmailId').touched) || addForm.get('primaryEmailId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('primaryEmailId').errors?.required">Email address is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('primaryEmailId').errors?.pattern">Email address is
+                    invalid</small>
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Secondary Contact</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <!-- <mat-label>Ex : 098645322</mat-label> -->
+                <input onlyNumbers [formControl]="addForm.controls['secondaryContact']" matInput placeholder="Ex : 098645322" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Secondary Email</label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <!-- <mat-label>Ex : abc@gmail.com</mat-label> -->
+                <input matInput [formControl]="addForm.controls['secondaryEmailId']" placeholder="Ex : abc@gmail.com" [class.is-invalid]="addForm.get('secondaryEmailId').invalid && addForm.get('secondaryEmailId').touched"/>
+                <div
+                  *ngIf="(addForm.get('secondaryEmailId').invalid && addForm.get('secondaryEmailId').touched) || addForm.get('secondaryEmailId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('secondaryEmailId').errors?.required">Email address is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('secondaryEmailId').errors?.pattern">Email address is
+                    invalid</small>
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Tier <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Select Tier</mat-label>
+                <mat-select [formControl]="addForm.controls['tierId']" (selectionChange)="onTierChange()">
+                  <mat-option *ngFor="let item of tierListArray" [value]="item.id">
+                    {{ item.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div> -->
+          <!-- <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">User License <em>*</em></label>
+            <div class="inpu-t2">
+              <mat-form-field appearance="outline" class="w-100">
+                <input readonly [formControl]="addForm.controls['userLicense']" matInput placeholder="Ex : Microsoft" />
+              </mat-form-field>
+            </div>
+          </div> -->
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Admin Email <em>*</em></label>
+            <div class="disabled">
+              <mat-form-field appearance="outline" class="w-100">
+                <input type="email" [readonly]="isEditing" matInput [formControl]="addForm.controls['adminLoginId']"
+                  placeholder="Ex : abc@gmail.com" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Website <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['website']" matInput placeholder="Ex : https://www.infosys.com">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Applet Wallet Logo<em>*</em></label>
+            <div class="imageoverlap">
+              <mat-form-field appearance="outline" class="w-100" (click)="fileAppleWalletInput.click()">
+                <!-- <mat-label><img class="image-icon" src="assets/images/image.svg" />Upload</mat-label> -->
+                <input [formControl]="addForm.controls['appleLogo']" matInput readonly placeholder="Upload" />
+                <img class="upload-icon" src="assets/images/Upload.svg" />
+                <input hidden #fileAppleWalletInput accept="image/x-png,image/jpeg" (change)="fileAppleLogoChangeEvent($event)" type="file"
+                  file-model="myFile" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Logo <em>*</em></label>
+            <div class="imageoverlap">
+              <mat-form-field appearance="outline" class="w-100" (click)="fileInput.click()">
+                <!-- <mat-label><img class="image-icon" src="assets/images/image.svg" />Upload</mat-label> -->
+                <input [formControl]="addForm.controls['logo']" matInput readonly placeholder="Upload" />
+                <img class="upload-icon" src="assets/images/Upload.svg" />
+                <input hidden #fileInput accept="image/x-png,image/jpeg" (change)="fileChangeEvent($event)" type="file"
+                  file-model="myFile" />
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- <div class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Confirm Admin Password <em>*</em></label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['confirm_password']" [type]="hide1 ? 'password' : 'text'" matInput
+                  placeholder="Admin Password" />
+                <mat-icon matSuffix class="eye-icon3" (click)="hide1 = !hide1">{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+            </div>
+          </div> -->
+          <div *ngIf="currentUser?.userType == 'Tenant Admin'" class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">LinkedIn Id </label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['linkedinId']" matInput placeholder="Ex : https://www.linkedIn.com">
+                <!-- <div
+                  *ngIf="(addForm.get('linkedinId').invalid && addForm.get('linkedinId').touched) || addForm.get('linkedinId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('linkedinId').errors?.required">LinkedIn Id is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('linkedinId').errors?.pattern">LinkedIn Id is
+                    invalid</small>
+                </div> -->
+              </mat-form-field>
+            </div>
+          </div>
+          <div *ngIf="currentUser?.userType == 'Tenant Admin'" class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Facebook Id </label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['facebookId']" matInput placeholder="Ex : https://www.facebook.com">
+                <!-- <div
+                  *ngIf="(addForm.get('facebookId').invalid && addForm.get('facebookId').touched) || addForm.get('facebookId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('facebookId').errors?.required">Facebook Id is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('facebookId').errors?.pattern">Facebook Id is
+                    invalid</small>
+                </div> -->
+              </mat-form-field>
+            </div>
+          </div>
+          <div *ngIf="currentUser?.userType == 'Tenant Admin'" class="form-group w-45 input-fildcl">
+            <label for="lname" class="control-label">Youtube Id </label>
+            <div class="">
+              <mat-form-field appearance="outline" class="w-100">
+                <input [formControl]="addForm.controls['youtubeId']" matInput placeholder="Ex : https://www.youtube.com">
+                <!-- <div
+                  *ngIf="(addForm.get('youtubeId').invalid && addForm.get('youtubeId').touched) || addForm.get('youtubeId').dirty">
+                  <small class="text-danger" *ngIf="addForm.get('youtubeId').errors?.required">Youtube Id is
+                    required</small>
+                  <small class="text-danger" *ngIf="addForm.get('youtubeId').errors?.pattern">Youtube Id is
+                    invalid</small>
+                </div> -->
+              </mat-form-field>
+            </div>
+          </div>
+          <span>Address</span>
+          <hr>
+          <ng-container class="form-group" formGroupName="address">
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Address Name <em>*</em></label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput formControlName="addressName" placeholder="Ex : Primary">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Street</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput (keypress)="validateAddress($event)" formControlName="street"
+                    placeholder="Ex : Street">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Building</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput (keypress)="validateAddress($event)" formControlName="building"
+                    placeholder="Ex : Building">
+                </mat-form-field>
+              </div>
+            </div>
+            <!-- <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Locality</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput formControlName="locality" placeholder="Ex : Locality">
+                </mat-form-field>
+              </div>
+            </div> -->
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label"> Postal Code <em>*</em></label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput number formControlName="postalcode" placeholder="Ex : Postalcode">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">City</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput (keypress)="validateText($event)" formControlName="city" placeholder="Ex : City">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">State</label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput (keypress)="validateText($event)" formControlName="state" placeholder="Ex : State">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group w-45 input-fildcl">
+              <label for="lname" class="control-label">Country <em>*</em></label>
+              <div class="">
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput (keypress)="validateText($event)" formControlName="country"
+                    placeholder="Ex : country">
+                </mat-form-field>
+              </div>
+            </div>
+
+          </ng-container>
+          <div class="d-flex justify-content-end margin-y">
+            <button type="button" mat-raised-button  routerBack>
+              Cancel
+            </button>
+            <button [disabled]="showLoader" type="submit" mat-raised-button color="primary">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<loading *ngIf="showLoader"></loading>
